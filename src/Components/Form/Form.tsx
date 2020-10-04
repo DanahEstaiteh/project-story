@@ -62,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const handleClick = () =>{
+  alert("login is clicked");
+}
+
 const Form: React.FC<PropsType> = (props) => {
   const classes = useStyles();
   const {login , isLogin} = props;
@@ -89,6 +93,7 @@ const Form: React.FC<PropsType> = (props) => {
       />
       <ThemeProvider theme={ButtonTheme}>
         <Button
+          onClick={handleClick}
           className={`${classes.formButton} ${login}`}
           disabled={isLogin}
           variant="contained"
