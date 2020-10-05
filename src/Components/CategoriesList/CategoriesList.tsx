@@ -1,6 +1,12 @@
 import React , {useEffect} from "react";
 import List from "@material-ui/core/List";
 import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   ListItem,
   ListItemText,
   makeStyles,
@@ -12,6 +18,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 import SortIcon from '@material-ui/icons/Sort';
 import { SettingsSystemDaydreamTwoTone } from "@material-ui/icons";
+import AlertDialog from "../AlertDialog/AlertDialog";
 
 const useStyles = makeStyles({
   root: {
@@ -144,7 +151,8 @@ function CategoriesCreatedAtList() {
 }
 const CategoriesActionList: React.FC = () => {
   const classes = useStyles();
-
+  const [isDelete, setIsDelete] = React.useState<boolean>(false);
+  
   return (
     <div>
       <List className={classes.List}>
@@ -161,18 +169,19 @@ const CategoriesActionList: React.FC = () => {
             key={CategoryAction.id}
           >
             <ListItemIcon>
-              <ClearIcon />
+              <ClearIcon onClick={() => setIsDelete(true)}/>
               <EditIcon />
             </ListItemIcon>
           </ListItem>
         ))}
       </List>
+      {isDelete ? <AlertDialog /> : null}
     </div>
   );
 };
 function CategoriesList() {
   const classes = useStyles();
-  const [isDelete, setIsDelete] = React.useState<boolean>(false);
+  
   return (
     <div className={classes.root}>
       <CategoriesNameList />
