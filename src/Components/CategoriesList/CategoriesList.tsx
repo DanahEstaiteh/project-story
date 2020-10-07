@@ -1,24 +1,14 @@
-import React , {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import List from "@material-ui/core/List";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  ListItem,
-  ListItemText,
-  makeStyles,
-} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import { ListItem, ListItemText, makeStyles } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import EditIcon from "@material-ui/icons/Edit";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
-import SortIcon from '@material-ui/icons/Sort';
-import { SettingsSystemDaydreamTwoTone } from "@material-ui/icons";
+
 import AlertDialog from "../AlertDialog/AlertDialog";
+
+import DataList from "./DataList";
 
 const useStyles = makeStyles({
   root: {
@@ -44,151 +34,95 @@ const useStyles = makeStyles({
   },
 });
 
-
-
-interface Categorie {
+export interface Categorie {
   id: string;
-  CategorieName: string;
+  [CategorieName: string]: string;
   CreatedAt: string;
- 
 }
 
-const Categories = [
-  {
-    id: "1",
-    CategorieName: "red",
-   
-    CreatedAt: "22-12-2020-12",
-  },
-  {
-    id: "2",
-    CategorieName: "black",
-    CreatedAt: "22-12-2020-11",
-    
-  },
-  {
-    id: "3",
-    CategorieName: "yellow",
-    CreatedAt: "22-12-2020-10",
-    
-  },
-];
+interface ActionListProps {
+  deletitem: (arr: Categorie[]) => void;
+  Categories: Categorie[];
+}
+interface DataListProps<T> {
+  Categories: T[];
+}
 
-
-
-function CategoriesNameList() {
-
-  const [data, setData] = React.useState<Array<Categorie>>([]);
-  const [sortName, setSortName] = React.useState<boolean>(false);
+const CategoriesActionList: React.FC<ActionListProps> = (props) => {
   const classes = useStyles();
+  const { Categories, deletitem } = props;
+  const [data, setData] = React.useState<Categorie[]>(Categories);
+  const [open, setOpen] = useState<boolean>(false);
+  const [itemId, setItemId] = useState<string>("");
 
-const CategoriesNameSort = () => {
-  Categories.sort((a, b) => (a.CategorieName > b.CategorieName) ? 1 : -1)
-setData(Categories);}
-
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleDelete = (id: string) => {
+    setItemId(id);
+    handleOpen();
+  };
   useEffect(() => {
-    if (sortName){
-      CategoriesNameSort();
-    }
-  } ,[sortName]);
-  
-  return (
-    <div>
-      <List className={classes.List}>
-      <ListItem>
-          <ListItemText>Categorie Name</ListItemText>
-          <ListItemIcon>
-            <SwapVertIcon  onClick={() => setSortName(!sortName)}/>
-          </ListItemIcon>
-          <ListItemIcon>
-            <SortIcon />
-          </ListItemIcon>
-        </ListItem>
-        {Categories.map((Category) => (
-          <ListItem className={classes.ListItem} key={Category.id}>
-            <ListItemText>{Category.CategorieName}</ListItemText>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-}
-function CategoriesCreatedAtList() {
-  const classes = useStyles();
-  const [sortDate, setSortDate] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<Array<Categorie>>([]);
-
-  const CategoriesDateSort = () => {
-    Categories.sort((a, b) => (a.CreatedAt > b.CreatedAt) ? 1 : -1)
-  setData(Categories);}
-
-  useEffect(() => {
-    if (sortDate){
-      CategoriesDateSort();
-    }
-  } ,[sortDate]);
-
-  return (
-    <div>
-      <List className={classes.List}>
-      <ListItem>
-          <ListItemText>Creatred At</ListItemText>
-          <ListItemIcon>
-            <SwapVertIcon onClick={() => setSortDate(!sortDate)}/>
-          </ListItemIcon>
-        </ListItem>
-        {Categories.map((CategoryDate) => (
-          <ListItem
-            className={classes.ListItem}
-            key={CategoryDate.id}
-          >
-            <ListItemText>{CategoryDate.CreatedAt}</ListItemText>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-}
-const CategoriesActionList: React.FC = () => {
-  const classes = useStyles();
-  const [isDelete, setIsDelete] = React.useState<boolean>(false);
-  
+    deletitem(data);
+  }, [data]);
   return (
     <div>
       <List className={classes.List}>
         <ListItem>
-          <ListItemText>Actions</ListItemText>
+          <ListItemText>{props.children}</ListItemText>
           <ListItemIcon>
             <SwapVertIcon />
           </ListItemIcon>
         </ListItem>
 
-        {Categories.map((CategoryAction) => (
-          <ListItem
-            className={classes.ListItem}
-            key={CategoryAction.id}
-          >
+        {data.map((CategoryAction) => (
+          <ListItem className={classes.ListItem} key={CategoryAction.id}>
             <ListItemIcon>
-              <ClearIcon onClick={() => setIsDelete(true)}/>
+              <ClearIcon onClick={() => handleDelete(CategoryAction.id)} />
               <EditIcon />
             </ListItemIcon>
           </ListItem>
         ))}
+        <AlertDialog
+          Data={data}
+          id={itemId}
+          isOpen={open}
+          onDelete={(data) => setData(data)}
+          onClose={handleClose}
+        />
       </List>
-      {isDelete ? <AlertDialog /> : null}
     </div>
   );
 };
-function CategoriesList() {
+
+const CategoriesList: React.FC<DataListProps<Categorie>> = (props) => {
+  const { Categories } = props;
   const classes = useStyles();
-  
+  const [data, setData] = React.useState<Categorie[]>(Categories);
+
+  useEffect(() => {
+    setData(data);
+  }, [data]);
+
   return (
     <div className={classes.root}>
-      <CategoriesNameList />
-      <CategoriesCreatedAtList />
-      <CategoriesActionList />
+      <DataList type="CategorieName" Categories={data}>
+        Categorie Name
+      </DataList>
+      <DataList type="CreatedAt" Categories={data}>
+        Created At
+      </DataList>
+      <CategoriesActionList
+        Categories={data}
+        deletitem={(data) => setData(data)}
+      >
+        Actions
+      </CategoriesActionList>
     </div>
   );
-}
+};
 
 export default CategoriesList;

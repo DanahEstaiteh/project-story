@@ -12,7 +12,7 @@ import {
   faDollarSign,
   faChartLine,
   faSignOutAlt,
-  faMoneyBill
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -65,15 +65,15 @@ const useStyles = makeStyles({
     color: "gray",
   },
   itemDrop: {
-     paddingRight: '0px', 
+    paddingRight: "0px",
   },
   arrowDropDown: {
-      
-      color: 'gray',
-  }
+    color: "gray",
+  },
 });
 
-const preventDefault = (event: React.MouseEvent<HTMLElement>) => event.preventDefault();
+const preventDefault = (event: React.MouseEvent<HTMLElement>) =>
+  event.preventDefault();
 
 interface HeaderItemProps {
   IconClass: IconProp;
@@ -82,7 +82,6 @@ interface HeaderItemProps {
 }
 
 const HeaderItem: React.FC<HeaderItemProps> = (props) => {
-    
   const classes = useStyles();
   const { IconClass, LinkHref, Name } = props;
   return (
@@ -107,7 +106,11 @@ const LanguageList: React.FC = () => {
     <List>
       <ListItem>
         <LanguageIcon />
-        {open ? <ArrowDropUpIcon onClick={handleClick}/> : <ArrowDropDownIcon onClick={handleClick}/>}
+        {open ? (
+          <ArrowDropUpIcon onClick={handleClick} />
+        ) : (
+          <ArrowDropDownIcon onClick={handleClick} />
+        )}
       </ListItem>
     </List>
   );
@@ -121,12 +124,12 @@ const PosHeader = () => {
       <ul className={classes.headerListLeft}>
         <HeaderItem IconClass={faCreditCard} LinkHref="#" Name="POS" />
         <HeaderItem IconClass={faArchive} LinkHref="#" Name="Products" />
-        <HeaderItem IconClass={faUsers} LinkHref="#" Name="People"/>
-        <ArrowDropDownIcon className={classes.arrowDropDown}/>
-        <HeaderItem IconClass={faMoneyBill} LinkHref="#" Name="Sales"/>
-        <HeaderItem IconClass={faDollarSign} LinkHref="#" Name="Expense"/>
-        <HeaderItem IconClass={faBookmark} LinkHref="#" Name="Categories"/>
-        <ArrowDropDownIcon className={classes.arrowDropDown}/>
+        <HeaderItem IconClass={faUsers} LinkHref="#" Name="People" />
+        <ArrowDropDownIcon className={classes.arrowDropDown} />
+        <HeaderItem IconClass={faMoneyBill} LinkHref="#" Name="Sales" />
+        <HeaderItem IconClass={faDollarSign} LinkHref="#" Name="Expense" />
+        <HeaderItem IconClass={faBookmark} LinkHref="#" Name="Categories" />
+        <ArrowDropDownIcon className={classes.arrowDropDown} />
         <HeaderItem IconClass={faCogs} LinkHref="#" Name="Setting" />
         <HeaderItem IconClass={faChartLine} LinkHref="#" Name="Reports" />
       </ul>
