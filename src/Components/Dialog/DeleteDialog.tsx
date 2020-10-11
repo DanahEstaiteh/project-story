@@ -1,24 +1,19 @@
-import React, { useEffect, useImperativeHandle } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import { Categorie } from "../CategoriesList/CategoriesList";
-import { createFalse } from "typescript";
-import { forwardRef } from "react";
-interface NewCategoryProps {
-  newCategoriesList: (newCat: Categorie[]) => void;
-}
+import { Categorie } from "../../Types/index";
 
 interface AlertDialogProps {
   id: string;
-  onDelete: NewCategoryProps["newCategoriesList"];
+  onDelete: (newCat: Categorie[]) => void;
   isOpen: boolean;
   onClose: () => void;
   Data: Categorie[];
 }
-const AlertDialog: React.FC<AlertDialogProps> = (props) => {
+const DeleteDialog: React.FC<AlertDialogProps> = (props) => {
   const { id, onDelete, isOpen, onClose, Data } = props;
 
   const handleDelete = () => {
@@ -51,4 +46,4 @@ const AlertDialog: React.FC<AlertDialogProps> = (props) => {
   );
 };
 
-export default AlertDialog;
+export default DeleteDialog;

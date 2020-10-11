@@ -4,40 +4,111 @@ import './App.css';
 import Form from './Components/index';
 import PosHeader from './Components/PosHeader/PosHeader'
 import CategoriesList from './Components/CategoriesList/CategoriesList';
-
-export const Data = [
+import EditDialog from './Components/Dialog/EditDialog';
+import Search from './Components/Search/Search';
+import {Categorie} from '../src/Types/index';
+export const Data : Categorie[]= [
   {
     id: "1",
     CategorieName: "red",
    
-    CreatedAt: "22-12-2020-12",
+    CreatedAt: new Date(),
   },
   {
     id: "2",
-    CategorieName: "green",
+    CategorieName: "PINK",
    
-    CreatedAt: "22-12-2020-09",
+    CreatedAt: new Date(),
   },
   {
     id: "3",
-    CategorieName: "black",
-    CreatedAt: "22-12-2020-11",
-    
+    CategorieName: "ORANGE",
+   
+    CreatedAt: new Date(),
   },
   {
     id: "4",
+    CategorieName: "GOLD",
+   
+    CreatedAt: new Date(),
+  },
+  {
+    id: "5",
+    CategorieName: "LAVENDER",
+   
+    CreatedAt: new Date(),
+  },
+  {
+    id: "6",
+    CategorieName: "SEAGREEN",
+   
+    CreatedAt: new Date(),
+  },
+  {
+    id: "7",
+    CategorieName: "OLIVE",
+   
+    CreatedAt: new Date(),
+  },
+  {
+    id: "8",
+    CategorieName: "black",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "9",
     CategorieName: "yellow",
-    CreatedAt: "22-12-2020-10",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "10",
+    CategorieName: "TEAL",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "11",
+    CategorieName: "CYAN",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "12",
+    CategorieName: "TURQUOISE",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "13",
+    CategorieName: "BLUE",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "14",
+    CategorieName: "TAN",
+    CreatedAt: new Date(),
+    
+  },
+  {
+    id: "15",
+    CategorieName: "PERU",
+    CreatedAt: new Date(),
     
   },
 ];
 
 function App() {
+  const [data, setData] = React.useState<Categorie[]>(Data);
   return (
     <div className="App">
-      <CategoriesList Categories={Data}/>
+       <CategoriesList categoryData={data} />  
+      
     </div>
   );
+  
 }
 
 export default App;

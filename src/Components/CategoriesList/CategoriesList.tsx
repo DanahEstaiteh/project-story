@@ -1,59 +1,50 @@
 import React, { useEffect, useState } from "react";
-import List from "@material-ui/core/List";
-import { ListItem, ListItemText, makeStyles } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
-import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import EditIcon from "@material-ui/icons/Edit";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
+import { format } from "date-fns";
 
-import AlertDialog from "../AlertDialog/AlertDialog";
+import EditDialog from "../Dialog/EditDialog";
 
-import DataList from "./DataList";
+import { Categorie } from "../../Types";
+import { categoryStyles } from "./Styles";
+import Search from "../Search/Search";
+import TablePaginationDemo from "../Pagination/TablePaginationDemo";
+import AddNew from "../AddNew/AddNew";
+import HeaderList from "./HeaderList";
 
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    marginTop: "30px",
-  },
-  List: {
-    border: "2px solid #DDDDDD",
-    width: "300px",
-    paddingBottom: "0px",
-  },
-  ListItem: {
-    border: "1px solid #DDDDDD",
-    width: "300px",
-    height: "70px",
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#F9F9F9",
-    },
-
-    textAlign: "center",
-  },
-});
-
-export interface Categorie {
-  id: string;
-  [CategorieName: string]: string;
-  CreatedAt: string;
+interface CategoryListProps {
+  categoryData: Categorie[];
 }
 
-interface ActionListProps {
-  deletitem: (arr: Categorie[]) => void;
-  Categories: Categorie[];
-}
-interface DataListProps<T> {
-  Categories: T[];
-}
-
-const CategoriesActionList: React.FC<ActionListProps> = (props) => {
-  const classes = useStyles();
-  const { Categories, deletitem } = props;
-  const [data, setData] = React.useState<Categorie[]>(Categories);
+const CategoryData: React.FC<CategoryListProps> = (props) => {
+  const classes = categoryStyles();
+  const { categoryData } = props;
+  const [data, setData] = useState<Categorie[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [itemId, setItemId] = useState<string>("");
+  const [itemName, setItemName] = useState<string>("");
+  const pages = [5, 10, 15];
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const dataAfterPaging = () => {
+    return data.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -61,67 +52,104 @@ const CategoriesActionList: React.FC<ActionListProps> = (props) => {
   const handleOpen = () => {
     setOpen(true);
   };
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
+  const handleOpenEditDialog = (Name: string) => {
+    setItemName(Name);
+    setOpenEditDialog(true);
+  };
   const handleDelete = (id: string) => {
     setItemId(id);
     handleOpen();
   };
-  useEffect(() => {
-    deletitem(data);
-  }, [data]);
-  return (
-    <div>
-      <List className={classes.List}>
-        <ListItem>
-          <ListItemText>{props.children}</ListItemText>
-          <ListItemIcon>
-            <SwapVertIcon />
-          </ListItemIcon>
-        </ListItem>
 
-        {data.map((CategoryAction) => (
-          <ListItem className={classes.ListItem} key={CategoryAction.id}>
-            <ListItemIcon>
-              <ClearIcon onClick={() => handleDelete(CategoryAction.id)} />
-              <EditIcon />
-            </ListItemIcon>
-          </ListItem>
+  useEffect(() => {
+    setData(categoryData);
+  }, [categoryData]);
+
+  return (
+    <>
+      <Grid container spacing={0} className={classes.list}>
+        {dataAfterPaging().map((Category: Categorie) => (
+          <Grid container spacing={0} className={classes.row}>
+            <Grid item xs={4} className={classes.listItem}>
+              <Box key={Category.id}>{Category.CategorieName}</Box>
+            </Grid>
+            <Grid item xs={4} className={classes.listItem}>
+              <Box key={Category.id}>
+                {format(Category.CreatedAt, "dd-mm-yyyy tt")}
+              </Box>
+            </Grid>
+            <Grid item xs={4} className={classes.listItem}>
+              <Box key={Category.id}>
+                <ClearIcon
+                  className={classes.actionIcon}
+                  onClick={() => handleDelete(Category.id)}
+                />
+                <EditIcon
+                  className={classes.actionIcon}
+                  onClick={() => handleOpenEditDialog(Category.CategorieName)}
+                />
+              </Box>
+            </Grid>
+          </Grid>
         ))}
-        <AlertDialog
+        <DeleteDialog
           Data={data}
           id={itemId}
           isOpen={open}
           onDelete={(data) => setData(data)}
           onClose={handleClose}
         />
-      </List>
-    </div>
+        <EditDialog
+          Data={data}
+          CategoryName={itemName}
+          isOpen={openEditDialog}
+          onSubmit={(data) => setData(data)}
+          onClose={handleCloseEditDialog}
+        />
+      </Grid>
+      <TablePaginationDemo
+        count={data.length}
+        data={data}
+        onChangePage={(data) => setData(data)}
+        onHandleChangePage={handleChangePage}
+        onHandleChangeRowsPerPage={handleChangeRowsPerPage}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        pages={pages}
+      />
+    </>
   );
 };
 
-const CategoriesList: React.FC<DataListProps<Categorie>> = (props) => {
-  const { Categories } = props;
-  const classes = useStyles();
-  const [data, setData] = React.useState<Categorie[]>(Categories);
-
+const CategoriesList: React.FC<CategoryListProps> = (props) => {
+  const { categoryData } = props;
+  const [data, setData] = useState<Categorie[]>(categoryData);
+  const categoryTitle: string[] = ["CategoryName", "Created At", "Actions"];
   useEffect(() => {
     setData(data);
   }, [data]);
-
+  const classes = categoryStyles();
   return (
-    <div className={classes.root}>
-      <DataList type="CategorieName" Categories={data}>
-        Categorie Name
-      </DataList>
-      <DataList type="CreatedAt" Categories={data}>
-        Created At
-      </DataList>
-      <CategoriesActionList
-        Categories={data}
-        deletitem={(data) => setData(data)}
-      >
-        Actions
-      </CategoriesActionList>
-    </div>
+    <>
+      <header className={classes.header}>
+        <AddNew onSubmit={(data) => setData(data)} Data={data} />
+        <Search
+          Data={data}
+          onSearch={(data) => setData(data)}
+          allData={categoryData}
+        />
+      </header>
+      <HeaderList
+        categoryTitle={categoryTitle}
+        categoryData={data}
+        onSort={(data) => setData(data)}
+        type={"CategorieName"}
+      />
+      <CategoryData categoryData={data} />
+    </>
   );
 };
 
