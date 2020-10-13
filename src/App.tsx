@@ -6,106 +6,21 @@ import PosHeader from './Components/PosHeader/PosHeader'
 import CategoriesList from './Components/CategoriesList/CategoriesList';
 import EditDialog from './Components/Dialog/EditDialog';
 import Search from './Components/Search/Search';
-import {Categorie} from '../src/Types/index';
-export const Data : Categorie[]= [
-  {
-    id: "1",
-    CategorieName: "red",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "2",
-    CategorieName: "PINK",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "3",
-    CategorieName: "ORANGE",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "4",
-    CategorieName: "GOLD",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "5",
-    CategorieName: "LAVENDER",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "6",
-    CategorieName: "SEAGREEN",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "7",
-    CategorieName: "OLIVE",
-   
-    CreatedAt: new Date(),
-  },
-  {
-    id: "8",
-    CategorieName: "black",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "9",
-    CategorieName: "yellow",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "10",
-    CategorieName: "TEAL",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "11",
-    CategorieName: "CYAN",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "12",
-    CategorieName: "TURQUOISE",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "13",
-    CategorieName: "BLUE",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "14",
-    CategorieName: "TAN",
-    CreatedAt: new Date(),
-    
-  },
-  {
-    id: "15",
-    CategorieName: "PERU",
-    CreatedAt: new Date(),
-    
-  },
-];
+import {Category, product} from '../src/Types/index';
+import { categoryData,productData } from './Data/Data';
+import ProductDataList from './Components/productData/productDataList';
+import Product from './Components/productData/Product';
+import FilterProductList from './Components/FilterProductList/FilterProductList';
 
 function App() {
-  const [data, setData] = React.useState<Categorie[]>(Data);
+  //const [data, setData] = React.useState<Category[]>(categoryData);
+  const [data, setData] = React.useState<product[]>(productData);
   return (
     <div className="App">
-       <CategoriesList categoryData={data} />  
       
+     {/*  <ProductDataList productData={productData} /> */}
+     {/* <Product productData={data}/> */}
+     <Product productData={data} />
     </div>
   );
   

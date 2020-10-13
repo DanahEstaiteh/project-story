@@ -1,10 +1,12 @@
 import React from "react";
 import TablePagination from "@material-ui/core/TablePagination";
-import { Categorie } from "../../Types";
+import { Category, product } from "../../Types";
 
-interface PaginationProps {
-  data: Categorie[];
-  onChangePage: (newData: Categorie[]) => void;
+type DataType = product;
+
+type PaginationProps ={
+  data: DataType[];
+  onChangePage: (newData: DataType[] ) => void;
   count: number;
   onHandleChangePage: (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -18,7 +20,7 @@ interface PaginationProps {
   pages: number[];
 }
 
-const TablePaginationDemo: React.FC<PaginationProps> = (props) => {
+const TablePaginationDemo: React.FC<PaginationProps>= (props) => {
   const {
     count,
     onHandleChangePage,

@@ -6,21 +6,22 @@ import { format } from "date-fns";
 
 import EditDialog from "../Dialog/EditDialog";
 
-import { Categorie } from "../../Types";
+import { Category } from "../../Types";
 import { categoryStyles } from "./Styles";
 import Search from "../Search/Search";
 import TablePaginationDemo from "../Pagination/TablePaginationDemo";
 import AddNew from "../AddNew/AddNew";
 import HeaderList from "./HeaderList";
+import DeleteDialog from "../Dialog/DeleteDialog";
 
 interface CategoryListProps {
-  categoryData: Categorie[];
+  categoryData: Category[];
 }
 
 const CategoryData: React.FC<CategoryListProps> = (props) => {
   const classes = categoryStyles();
   const { categoryData } = props;
-  const [data, setData] = useState<Categorie[]>([]);
+  const [data, setData] = useState<Category[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [itemId, setItemId] = useState<string>("");
@@ -71,7 +72,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
   return (
     <>
       <Grid container spacing={0} className={classes.list}>
-        {dataAfterPaging().map((Category: Categorie) => (
+        {dataAfterPaging().map((Category: Category) => (
           <Grid container spacing={0} className={classes.row}>
             <Grid item xs={4} className={classes.listItem}>
               <Box key={Category.id}>{Category.CategorieName}</Box>
@@ -110,7 +111,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
           onClose={handleCloseEditDialog}
         />
       </Grid>
-      <TablePaginationDemo
+      {/* <TablePaginationDemo
         count={data.length}
         data={data}
         onChangePage={(data) => setData(data)}
@@ -119,14 +120,14 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
         page={page}
         rowsPerPage={rowsPerPage}
         pages={pages}
-      />
+      /> */}
     </>
   );
 };
 
 const CategoriesList: React.FC<CategoryListProps> = (props) => {
   const { categoryData } = props;
-  const [data, setData] = useState<Categorie[]>(categoryData);
+  const [data, setData] = useState<Category[]>(categoryData);
   const categoryTitle: string[] = ["CategoryName", "Created At", "Actions"];
   useEffect(() => {
     setData(data);
@@ -136,17 +137,18 @@ const CategoriesList: React.FC<CategoryListProps> = (props) => {
     <>
       <header className={classes.header}>
         <AddNew onSubmit={(data) => setData(data)} Data={data} />
-        <Search
+        {/* <Search
           Data={data}
           onSearch={(data) => setData(data)}
           allData={categoryData}
-        />
+          multiProp={false}
+        /> */}
       </header>
       <HeaderList
         categoryTitle={categoryTitle}
         categoryData={data}
         onSort={(data) => setData(data)}
-        type={"CategorieName"}
+       
       />
       <CategoryData categoryData={data} />
     </>

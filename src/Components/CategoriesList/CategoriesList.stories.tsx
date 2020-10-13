@@ -1,7 +1,7 @@
 import { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import CategoriesList from './CategoriesList';
-import {Data} from '../../App';
+import {categoryData} from '../../Data/Data';
 
 export default {
     title: "Category",
@@ -11,6 +11,6 @@ export default {
 
 
   
-  const Template: Story = () => <CategoriesList categoryData={Data} />;
+  const Template: Story = () => <CategoriesList categoryData={categoryData} />;
 
   export const CategoryList = Template.bind({});

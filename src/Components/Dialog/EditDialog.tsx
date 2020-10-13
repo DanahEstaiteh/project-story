@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Categorie } from "../../Types/index";
+import { Category } from "../../Types/index";
 import { useEffect } from "react";
 import { useStyles } from "./style";
 
@@ -12,8 +12,8 @@ interface EdittDialogProps {
   isOpen: boolean;
   onClose: () => void;
   CategoryName: string;
-  onSubmit: (newCat: Categorie[]) => void;
-  Data: Categorie[];
+  onSubmit: (newCat: Category[]) => void;
+  Data: Category[];
 }
 
 const EditDialog: React.FC<EdittDialogProps> = (props) => {
@@ -22,7 +22,7 @@ const EditDialog: React.FC<EdittDialogProps> = (props) => {
 
   const handleSubmit = () => {
     const index = Data.findIndex(
-      (cat: Categorie) => cat["CategorieName"] === CategoryName
+      (cat: Category) => cat["CategorieName"] === CategoryName
     );
     Data[index].CategorieName = nameInput;
     const newData = [...Data];

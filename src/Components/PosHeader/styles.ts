@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
+  
     headerListLeft: {
       display: "flex",
       padding: "40px 40px 40px 0px",
@@ -65,6 +66,18 @@ const useStyles = makeStyles({
     },
     linkIcon: {
        paddingRight: '5px',
+    },
+    [`@media (max-width: 1200px)`]: {
+      item: {
+        paddingLeft: "10px",
+       
+      },
+      lisItem: {
+        paddingLeft: "10px",
+      },
+      header: {
+          fontSize: '14px',
+      },
     },
   });
 

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { categoryStyles } from "../CategoriesList/Styles";
-import { Categorie } from "../../Types";
+import { Category } from "../../Types";
 
 import NewDialog from "../Dialog/NewDialog";
 
 interface AddNewProps {
-  onSubmit: (newCat: Categorie[]) => void;
-  Data: Categorie[];
+  onSubmit: (newCat: Category[]) => void;
+  Data: Category[];
 }
 
 const AddNew: React.FC<AddNewProps> = (props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [data, setData] = useState<Categorie[]>([]);
+  const [data, setData] = useState<Category[]>([]);
   const { onSubmit, Data } = props;
   const handleCloseDialog = () => {
     setOpen(false);

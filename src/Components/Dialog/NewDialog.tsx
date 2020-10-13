@@ -4,14 +4,14 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Categorie } from "../../Types/index";
+import { Category } from "../../Types/index";
 import { useStyles } from "./style";
 
 interface EdittDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (newCat: Categorie[]) => void;
-  Data: Categorie[];
+  onSubmit: (newCat: Category[]) => void;
+  Data: Category[];
 }
 
 const NewDialog: React.FC<EdittDialogProps> = (props) => {
@@ -19,13 +19,13 @@ const NewDialog: React.FC<EdittDialogProps> = (props) => {
   const [nameInput, setNameInput] = useState<string>("");
 
   const handleSubmit = () => {
-    let newCategory: Categorie = {
+    let newCategory: Category = {
       id: (Data.length + 1).toString(),
       CategorieName: nameInput,
       CreatedAt: new Date(),
     };
     Data.push(newCategory);
-    let newData: Categorie[] = [...Data];
+    let newData: Category[] = [...Data];
     onSubmit(newData);
     onClose();
   };

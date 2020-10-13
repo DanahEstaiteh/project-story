@@ -1,29 +1,38 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Categorie } from "../../Types/index";
+import { Category, product } from "../../Types/index";
 import TextField from "@material-ui/core/TextField/TextField";
 
 interface SearchPropsType {
-  onSearch: (newCat: Categorie[]) => void;
-  Data: Categorie[];
-  allData: Categorie[];
+  onSearch: (newCat: product[]) => void;
+  Data: product[];
+  allData: product[];
+  multiProp: boolean;
 }
 
 const Search: React.FC<SearchPropsType> = (props) => {
-  const { onSearch, Data, allData } = props;
+  const { onSearch, Data, allData,multiProp } = props;
   const [searchKey, setSearchKey] = useState<string>("");
-  console.log({ Data });
+ 
   const handleSearch = () => {
-    if (searchKey !== "") {
-      let newData = Data.filter((item) =>
-        item["CategorieName"].includes(searchKey)
-      );
-
+    if (searchKey !== "" && multiProp) {
+      let newData= Data.filter(x => Object.values(x)
+      .join(' ')
+      .toLowerCase()
+      .includes(searchKey.toLowerCase()));
       onSearch(newData);
-    } else {
+      console.log({newData});
+    } else if(searchKey !== "" ){
+     // let newData = Data.filter((item) =>
+     // item["CategorieName"].includes(searchKey)
+   // );
+
+    //onSearch(newData);
+    }else{
       onSearch(allData);
     }
   };
+
 
   useEffect(() => {
     handleSearch();
