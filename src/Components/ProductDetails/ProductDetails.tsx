@@ -60,7 +60,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = (props) => {
              <div className={classes.itemValue}>
                
                <p> {productToShow?.code}</p>
-               <p> {productToShow?.quantity}</p>
+               <p> {productToShow?.count}</p>
                </div>
                </div>
                <div className={classes.itemHead}>

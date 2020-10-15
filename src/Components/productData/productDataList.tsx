@@ -8,18 +8,44 @@ import EditIcon from "@material-ui/icons/Edit";
 import {productStyles} from './style' ;
 import TablePaginationDemo from "../Pagination/TablePaginationDemo";
 import ProductDetails from "../ProductDetails/ProductDetails";
+import PopUp from "../PopUp/PopUp";
+import ProductForm from "../ProductForm/ProductForm";
 interface ProductDataProps {
   productData: product[];
 }
 
 const ProductDataList: React.FC<ProductDataProps> = (props) => {
   const { productData } = props;
+  const initialEditProduct={
+    id:0,
+    code: "",
+    name: "",
+    category: "",
+    productDescription: "",
+    tax: 0,
+    price: 0,
+    img: "",
+    rawPrice: 0,
+    count: 0,
+    expirationDate: new Date,
+  }
+  const initialErrors = {
+    name: "",
+   rawPrice:  "",
+   code:  "",
+   category:  "",
+   expirationDate:  "",
+   price:  "",
+   count:  "",
+  }
   const [data, setData] = useState<product[]>([]);
   const [openProductDetails, setOpenopenProductDetails] = useState<boolean>(false);
   const [productCode, setProductCode] = useState<string>("");
   const pages = [5, 10, 15];
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
+  const [openProductEdit, setOpenopenProductEdit] = useState<boolean>(false);
+  const [productForEdit, setProductForEdit] = useState<product>(initialEditProduct);
   const classes = productStyles();
 
   const handleCloseProductDetails = () => {
@@ -29,8 +55,13 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
     setProductCode(code);
     setOpenopenProductDetails(true);
   };
-
-  
+  const handleOpenEditProduct = (product : product) => {
+    setProductForEdit(product);
+    setOpenopenProductEdit(true);
+  };
+  const handleCloseEditProduct = (product : product) => {
+    setOpenopenProductEdit(false);
+  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -82,7 +113,7 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
               <Box key={product.code}>
                 <ClearIcon className={classes.actionIcon}/>
                 <DescriptionIcon className={classes.actionIcon} onClick={ ()=> handleOpenProductDetails(product.code)}/>
-                <EditIcon className={classes.actionIcon} />
+                <EditIcon className={classes.actionIcon} onClick={ ()=> handleOpenEditProduct(product)}/>
               </Box>
             </Grid>
           </Grid>
@@ -93,6 +124,7 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
          Data={data}
          code={productCode}
         />
+
       </Grid>
       <TablePaginationDemo
         count={data.length}
@@ -104,6 +136,14 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
         rowsPerPage={rowsPerPage}
         pages={pages}
       />
+      <PopUp
+                title="Edit Product"
+                openPopup={openProductEdit}
+                setOpenPopup={setOpenopenProductEdit}
+            >
+                <ProductForm initialValues={productForEdit}  initialErrors={initialErrors}  />
+                               
+            </PopUp>
     </>
   );
 };

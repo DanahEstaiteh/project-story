@@ -3,8 +3,19 @@ export interface Category {
     CategorieName: string;
     CreatedAt:  Date;
   }
+  export interface Errors {
+    name: string;
+    rawPrice: string;
+    code: string;
+    category: string;
+    expirationDate: string;
+    price: string;
+    count: string;
+  }
+
 
   export interface product {
+    id: number;
     code: string;
     name: string;
     category: string;
@@ -13,8 +24,13 @@ export interface Category {
     price: number;
     img: string;
     rawPrice: number;
-    quantity: number;
+    count: number;
     expirationDate: Date;
+  }
+
+  export interface CategoryTitle {
+    id: string;
+    title: string;
   }
 
   

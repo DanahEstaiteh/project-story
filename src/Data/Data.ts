@@ -1,5 +1,4 @@
-import { Category, product } from "../Types";
-
+import { Category, CategoryTitle, product } from "../Types";
 
 export const categoryData: Category[] = [
   {
@@ -88,6 +87,7 @@ export const categoryData: Category[] = [
 
 export const productData: product[] = [
   {
+    id: 1,
     code: "product1",
     name: "lipstick",
     category: "pink",
@@ -96,22 +96,24 @@ export const productData: product[] = [
     price: 15.5,
     img: "../images/lipstick.jpg",
     rawPrice: 12,
-    quantity: 30,
+    count: 30,
     expirationDate: new Date("2021-01-16"),
   },
   {
+    id: 2,
     code: "product2",
     name: "blush",
     category: "brown",
     productDescription: "sephora",
-    tax:2,
+    tax: 2,
     price: 3.5,
     img: "../images/blush.jpg",
     rawPrice: 1.8,
-    quantity: 18,
+    count: 18,
     expirationDate: new Date("2020-11-16"),
   },
   {
+    id: 3,
     code: "product3",
     name: "foundation",
     category: "light",
@@ -120,10 +122,11 @@ export const productData: product[] = [
     price: 40,
     img: "../images/foundation.jpg",
     rawPrice: 32,
-    quantity: 55,
+    count: 55,
     expirationDate: new Date("2022-03-16"),
   },
   {
+    id: 4,
     code: "product4",
     name: "powder",
     category: "white",
@@ -132,10 +135,11 @@ export const productData: product[] = [
     price: 33.6,
     img: "../images/powder.jpg",
     rawPrice: 28,
-    quantity: 5,
+    count: 5,
     expirationDate: new Date("2020-12-16"),
   },
   {
+    id: 5,
     code: "product5",
     name: "highlighter",
     category: "bronze",
@@ -144,8 +148,12 @@ export const productData: product[] = [
     price: 40.5,
     img: "../images/highlight.jpg",
     rawPrice: 36,
-    quantity: 15,
+    count: 15,
     expirationDate: new Date("2020-11-25"),
   },
-  
+];
+export const categoryTitle: CategoryTitle[] = [
+  { id: "categoryName", title: "CategoryName" },
+  { id: "createdAt", title: "Created At" },
+  { id: "actions", title: "Actions" },
 ];

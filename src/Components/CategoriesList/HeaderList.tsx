@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Grid, Box } from "@material-ui/core";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 
-import { Category } from "../../Types";
+import { Category, CategoryTitle } from "../../Types";
 import { categoryStyles } from "./Styles";
 
 interface HeaderListProps {
-  categoryTitle: string[];
+  categoryTitle: CategoryTitle[];
   onSort: (data: Category[]) => void;
   categoryData: Category[];
 }
@@ -42,13 +42,13 @@ const HeaderList: React.FC<HeaderListProps> = (props) => {
 
   return (
     <Grid container spacing={0} className={classes.headerList}>
-      {categoryTitle.map((title: string) => (
+      {categoryTitle.map((category) => (
         <Grid item xs={4}>
-          <Box key={title} className={classes.headerItem}>
-            {title}
+          <Box key={category.id} className={classes.headerItem}>
+            {category.title}
             <SwapVertIcon
               onClick={() => {
-                handleSort(title);
+                handleSort(category.title);
               }}
             />
           </Box>

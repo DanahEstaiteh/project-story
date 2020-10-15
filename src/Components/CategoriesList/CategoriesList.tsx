@@ -13,6 +13,7 @@ import TablePaginationDemo from "../Pagination/TablePaginationDemo";
 import AddNew from "../AddNew/AddNew";
 import HeaderList from "./HeaderList";
 import DeleteDialog from "../Dialog/DeleteDialog";
+import { categoryTitle } from "../../Data/Data";
 
 interface CategoryListProps {
   categoryData: Category[];
@@ -128,7 +129,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
 const CategoriesList: React.FC<CategoryListProps> = (props) => {
   const { categoryData } = props;
   const [data, setData] = useState<Category[]>(categoryData);
-  const categoryTitle: string[] = ["CategoryName", "Created At", "Actions"];
+ 
   useEffect(() => {
     setData(data);
   }, [data]);
