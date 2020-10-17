@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import { categoryData, productData } from "../../Data/Data";
 import { Errors, product } from "../../Types";
@@ -148,6 +148,24 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
           />
           </Grid>
           <Grid item xs={12}>
+          
+        </Grid>
+          <Grid item xs={12}>
+          <input
+        accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+        type="file"
+        onChange={(event)=> {console.log(event.target.files)}}
+      />
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span">
+          Upload
+        </Button>
+        </label>
+          </Grid>
+          <Grid item xs={12}>
           <Controls.Select
              name="category"
              label="Category"
@@ -163,18 +181,12 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
           <TextareaAutosize className={classes.textArea} aria-label="minimum height" rowsMin={5} placeholder="Product Description" />
           </Grid>
           <Grid item xs={12}>
-          <Controls.DatePicker name="expirationDate" onChange={date => handleDateChange(date)}/>
+          <Controls.DatePicker name="expirationDate" onChange={date => handleDateChange(date)} minDate={new Date()}/>
         </Grid>
         <Grid item xs={12}>
         <div>
                        
-                        <Controls.MyButton
-                            text="Submit"
-                            color="primary"
-                            variant="contained"
-                            size="medium"
-                            type="submit"
-                             />
+                       
                     </div>
         </Grid>
       </Grid>

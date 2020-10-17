@@ -13,7 +13,12 @@ export const FilterProductStyles = makeStyles({
         justifyContent: 'flex-end',
         "& > *": {
           marginLeft: '20px',
-        }
+          paddingTop: '10px',
+        },
+        "& > p": {
+          marginLeft: '20px',
+          paddingTop: '0px',
+        },
       },
       applyButton: {
          

@@ -5,6 +5,9 @@ import SwapVertIcon from "@material-ui/icons/SwapVert";
 
 import { product } from "../../Types";
 import { productStyles } from "./style";
+import { productData } from "../../Data/Data";
+  
+
 
 interface HeaderListProps {
   productTitle: string[];
@@ -12,11 +15,21 @@ interface HeaderListProps {
   productData: product[];
 }
 
+enum sortType {
+  code = 'Code',
+  category = 'Category',
+  price = 'Price',
+  tax = 'Tax',
+  name = "Name",
+  productDescription = "ProductDescription"
+}
+
+
 const HeaderList: React.FC<HeaderListProps> = (props) => {
   const classes = productStyles();
   const { productTitle, productData, onSort } = props;
   const [sort, setSort] = useState<boolean>(false);
-  const [data] = useState<product[]>(productData);
+  const [data,setData] = useState<product[]>(productData);
 
   const handleSort = () => {
     setSort(!sort);
@@ -24,6 +37,7 @@ const HeaderList: React.FC<HeaderListProps> = (props) => {
   };
 
   const productSort = () => {
+    
     productData.sort((a, b) =>
       a > b ? 1 : -1
     );

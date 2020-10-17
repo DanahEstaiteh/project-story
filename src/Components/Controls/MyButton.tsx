@@ -14,18 +14,18 @@ interface MyButtonProps {
     size:  sizeType;
     onClick?: (event: any) => void;
     type: buttonType;
+    
   }
 
 const MyButton:React.FC<MyButtonProps> = (props) => {
-    const {text,variant,size,color,onClick,type} = props;
+    const {text,variant,size,onClick,type,color } = props;
     const classes = myButtonStyles();
     return (
        <Button variant={variant}
        size={size}
-       color={color}
+      color={color}
        onClick={onClick}
        type={type}
-       
        classes={{ root: classes.root, label: classes.label }}
        >{text}</Button>
     )

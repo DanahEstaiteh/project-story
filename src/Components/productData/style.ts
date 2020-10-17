@@ -80,5 +80,11 @@ margin: '50px 60px 10px',
     color: 'white',
     borderRadius: '5px',
   },
-  
+  headTwo: {
+    display: 'flex', 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: "60px",
+  },
+ 
 });

@@ -14,30 +14,32 @@ interface ProductDataProps {
   productData: product[];
 }
 
+export const initialEditProduct={
+  id:0,
+  code: "",
+  name: "",
+  category: "",
+  productDescription: "",
+  tax: 0,
+  price: 0,
+  img: "",
+  rawPrice: 0,
+  count: 0,
+  expirationDate: new Date,
+}
+export const initialErrors = {
+  name: "",
+ rawPrice:  "",
+ code:  "",
+ category:  "",
+ expirationDate:  "",
+ price:  "",
+ count:  "",
+}
+
 const ProductDataList: React.FC<ProductDataProps> = (props) => {
   const { productData } = props;
-  const initialEditProduct={
-    id:0,
-    code: "",
-    name: "",
-    category: "",
-    productDescription: "",
-    tax: 0,
-    price: 0,
-    img: "",
-    rawPrice: 0,
-    count: 0,
-    expirationDate: new Date,
-  }
-  const initialErrors = {
-    name: "",
-   rawPrice:  "",
-   code:  "",
-   category:  "",
-   expirationDate:  "",
-   price:  "",
-   count:  "",
-  }
+ 
   const [data, setData] = useState<product[]>([]);
   const [openProductDetails, setOpenopenProductDetails] = useState<boolean>(false);
   const [productCode, setProductCode] = useState<string>("");

@@ -1,26 +1,30 @@
+import classes from "*.module.css";
+import Grid from "@material-ui/core/Grid";
 import React, { useEffect, useState } from "react";
 import { product } from "../../Types";
 import Controls from "../Controls";
+import FilterProductList from "../FilterProductList/FilterProductList";
 import PopUp from "../PopUp/PopUp";
 import ProductForm from "../ProductForm/ProductForm";
 import Search from "../Search/Search";
 import HeaderList from "./HeaderList";
 import ProductDataList from "./productDataList";
+import { productStyles } from "./style";
 
 interface ProductProps {
   productData: product[];
 }
 
+
 const Product: React.FC<ProductProps> = (props) => {
   const { productData } = props;
   const [data, setData] = useState<product[]>(productData);
   const [openProductEdit, setOpenopenProductEdit] = useState<boolean>(false);
+  const classes = productStyles();
+
   const handleOpenPopup = () => {
     
     setOpenopenProductEdit(true);
-  };
-  const handleCloseEditProduct = (product : product) => {
-    setOpenopenProductEdit(false);
   };
   const initialValues={
     id:0,
@@ -59,12 +63,12 @@ const Product: React.FC<ProductProps> = (props) => {
 
   return (
     <>
-      <Search
-        Data={data}
-        onSearch={(data) => setData(data)}
-        allData={productData}
-        multiProp={true}
-      />
+    <Grid container >
+      <Grid item xs={11}>
+      <FilterProductList onFilter={data => setData(data)}/>
+      </Grid>
+      <Grid item xs={11}>
+      <div className={classes.headTwo}>
       <Controls.MyButton
         variant="contained"
         type="button"
@@ -73,6 +77,17 @@ const Product: React.FC<ProductProps> = (props) => {
         size="medium"
         onClick={() => handleOpenPopup()}
       />
+      <Search
+        Data={data}
+        onSearch={(data) => setData(data)}
+        allData={productData}
+        multiProp={true}
+      />
+      
+      </div>
+      </Grid>
+    </Grid>
+    
       <HeaderList
         productTitle={productTitle}
         productData={data}

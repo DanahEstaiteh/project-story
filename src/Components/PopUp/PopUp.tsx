@@ -1,8 +1,9 @@
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography/Typography';
 import React, { Children } from 'react';
 import { popupStyles } from './Style';
 import ClearIcon from "@material-ui/icons/Clear";
+import Controls from '../Controls';
 
 interface PopupPropsType {
   title: string;
@@ -29,6 +30,23 @@ const PopUp:React.FC<PopupPropsType> = (props) => {
           <DialogContent dividers>
            {children}
           </DialogContent>
+          <DialogActions >
+          <Controls.MyButton
+                            text="Submit"
+                            color="primary"
+                            variant="contained"
+                            size="medium"
+                            type="submit"
+                             />
+                             <Controls.MyButton
+                            text="Close"
+                            color="default"
+                            variant="contained"
+                            size="medium"
+                            type="button"
+                            onClick={()=> {setOpenPopup(false)}}
+                             />
+          </DialogActions>
         </Dialog>
     )
 }

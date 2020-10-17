@@ -7,12 +7,19 @@ import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 interface DatePickerProps {
   onChange: (date : Date) => void;
   name: string;
+  minDate: Date;
 }
 
 const DatePicker:React.FC<DatePickerProps> = (props) =>  {
 
   const [selectedDate, handleDateChange] = useState(new Date());
-  const {onChange , name} = props;
+  const { onChange,name , minDate} = props;
+
+const onChangeFirst = (date : Date) => {
+  handleDateChange(date);
+  onChange(selectedDate);
+}
+
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
@@ -20,9 +27,9 @@ const DatePicker:React.FC<DatePickerProps> = (props) =>  {
         name={name}
         value={selectedDate}
         placeholder={Date().toString()}
-        onChange={date => onChange(date as Date)}
-        minDate={new Date()}
-        format="MM/dd/yyyy"
+        onChange={date => onChangeFirst(date as Date)}
+        minDate={ minDate}
+        format="dd/MM/yyyy"
       />
          </MuiPickersUtilsProvider>
     )

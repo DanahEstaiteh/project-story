@@ -9,5 +9,8 @@ export const ProductFormStyles = makeStyles(theme => ({
     },
     textArea: {
         width: '90%',
-    }
+    },
+    input: {
+        display: 'none',
+      },
 }))
