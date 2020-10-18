@@ -11,10 +11,11 @@ import { addNewProduct, updateProduct } from "../productData/ProductFunction";
 interface ProductFprmPropsType {
   initialValues: product;
   initialErrors: Errors;
+  addOrEdit : (newData : product[]) => void;
 }
 
 const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
-  const { initialValues, initialErrors } = props;
+  const { initialValues, initialErrors , addOrEdit} = props;
   const [data,setData] = useState<product[]>(productData);
   const [values, setValues] = useState<product>(initialValues);
   const [errors, setErrors] = useState<Errors>(initialErrors);
@@ -26,7 +27,7 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
       ...values,
       [name]: value,
     });
-    console.log({values});
+    console.log("input" + {values});
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const name= e.target.name as string;
@@ -84,12 +85,13 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
        setData(newData);
        console.log({newData})
      }  
+     addOrEdit(data);
 
     }
 }
 
   return (
-    <form onSubmit={handleSubmit} className={classes.root} autoComplete="off">
+    <form onSubmit={handleSubmit} className={classes.root} autoComplete="off"  >
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Controls.Input
@@ -185,7 +187,21 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
         </Grid>
         <Grid item xs={12}>
         <div>
-                       
+        <Controls.MyButton
+                            text="Submit"
+                            color="primary"
+                            variant="contained"
+                            size="medium"
+                            type="submit"
+                             />
+                             <Controls.MyButton
+                            text="Close"
+                            color="default"
+                            variant="contained"
+                            size="medium"
+                            type="button"
+                           
+                             />   
                        
                     </div>
         </Grid>

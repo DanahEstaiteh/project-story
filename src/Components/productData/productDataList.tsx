@@ -49,7 +49,10 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
   const [openProductEdit, setOpenopenProductEdit] = useState<boolean>(false);
   const [productForEdit, setProductForEdit] = useState<product>(initialEditProduct);
   const classes = productStyles();
-
+  const addOrEdit = (newData : product[]) => {
+    setOpenopenProductEdit(false);
+    setData(newData);
+  }
   const handleCloseProductDetails = () => {
     setOpenopenProductDetails(false);
   };
@@ -143,7 +146,7 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
                 openPopup={openProductEdit}
                 setOpenPopup={setOpenopenProductEdit}
             >
-                <ProductForm initialValues={productForEdit}  initialErrors={initialErrors}  />
+                <ProductForm initialValues={productForEdit}  initialErrors={initialErrors}  addOrEdit={(data) => addOrEdit(data)} />
                                
             </PopUp>
     </>

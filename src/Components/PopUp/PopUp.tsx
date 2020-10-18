@@ -27,26 +27,9 @@ const PopUp:React.FC<PopupPropsType> = (props) => {
                         <ClearIcon onClick={()=>{setOpenPopup(false)}} />
                     </div>
           </DialogTitle>
-          <DialogContent dividers>
+          <DialogContent >
            {children}
           </DialogContent>
-          <DialogActions >
-          <Controls.MyButton
-                            text="Submit"
-                            color="primary"
-                            variant="contained"
-                            size="medium"
-                            type="submit"
-                             />
-                             <Controls.MyButton
-                            text="Close"
-                            color="default"
-                            variant="contained"
-                            size="medium"
-                            type="button"
-                            onClick={()=> {setOpenPopup(false)}}
-                             />
-          </DialogActions>
         </Dialog>
     )
 }
