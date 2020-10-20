@@ -283,5 +283,6 @@ export const categoryTitle: CategoryTitle[] = [
 export const cartData: Cart[] = [{ id: 2, time: new Date() }];
 
 export const itemData: Item[] = [
-  { cartId: 2, name: 'coffe', price: 10, count: 2, total: 20 }
+  { cartId: 2, name: 'coffe', price: 10, count: 1 },
+  { cartId: 2, name: 'Lemonada', price: 8, count: 1 }
 ];

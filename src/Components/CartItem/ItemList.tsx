@@ -1,12 +1,10 @@
-import { GridList, GridListTile } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid/Grid';
 import List from '@material-ui/core/List/List';
 import ListItem from '@material-ui/core/ListItem/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader/ListSubheader';
 import React from 'react';
 import { Item } from '../../Types';
-import Quantity from './Quantity';
 import { cartItemStyles } from './Style';
+import ItemCart from './Item';
 
 interface ItemListPropsType {
   itemList: Item[];
@@ -18,21 +16,16 @@ const ItemList: React.FC<ItemListPropsType> = (props) => {
   const classes = cartItemStyles();
   return (
     <Grid>
-      <List>
+      <List className={classes.headerList}>
         {headerlist.map((header) => (
           <ListItem key={header} className={classes.listItem}>
             {header}
           </ListItem>
         ))}
+      </List>
+      <List>
         {itemList.map((item) => (
-          <List key={item.name}>
-            <ListItem className={classes.listItem}>{item.name}</ListItem>
-            <ListItem className={classes.listItem}>{item.price}</ListItem>
-            <ListItem className={classes.listItem}>
-              <Quantity />
-            </ListItem>
-            <ListItem className={classes.listItem}>{item.total}</ListItem>
-          </List>
+          <ItemCart key={item.name} item={item} />
         ))}
       </List>
     </Grid>

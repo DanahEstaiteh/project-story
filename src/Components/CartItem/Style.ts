@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 
 export const cartItemStyles = makeStyles({
-  media: {
-    height: 140,
-    width: 140
+  topic: {
+    width: '140px'
   },
   box: {
     width: '140px',
@@ -22,7 +21,6 @@ export const cartItemStyles = makeStyles({
     padding: '2px'
   },
   appBar: {
-    backgroundColor: '#FFFFFF',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -59,7 +57,8 @@ export const cartItemStyles = makeStyles({
     boxShadow: '1px 1px 1px 1px #767'
   },
   root: {
-    width: '1000px'
+    width: '1000px',
+    backgroundColor: '#ECF0F1'
   },
   id: {
     fontSize: '20px'
@@ -89,5 +88,41 @@ export const cartItemStyles = makeStyles({
     width: '30px',
     height: '30px',
     color: '#B8C6D0'
+  },
+
+  deleteIcon: {
+    color: 'red',
+    paddingRight: '20px'
+  },
+
+  itemContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '500px',
+    height: '70px',
+    color: '#767B81',
+    marginBottom: '10px',
+    '& > div': {
+      padding: '20px'
+    }
+  },
+  quantity: {
+    position: 'relative',
+    top: '5px',
+    paddingLeft: '10px'
+  },
+  numberItem: {
+    width: '10px'
+  },
+  headerList: {
+    width: '450px',
+    fontWeight: 'bold',
+    color: '#34495E',
+    '&>:nth-child(2)': {
+      paddingLeft: '65px'
+    },
+    '&>:last-child': {
+      paddingLeft: '60px'
+    }
   }
 });

@@ -11,6 +11,7 @@ import StockItems from './Components/StockItems/StockItems';
 import CartTab from './Components/CartItem/CartTab';
 import { setDate } from 'date-fns';
 import CartItem from './Components/CartItem/CartItem';
+import CartFooter from './Components/CartItem/CartFooter';
 
 function App() {
   const products: ProductItem[] = getProductItem('home');

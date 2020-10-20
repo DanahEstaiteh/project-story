@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import React, { useEffect, useState } from 'react';
 import { itemData } from '../../Data/Data';
 import { Cart } from '../../Types';
+import CartFooter from './CartFooter';
 import CartTab from './CartTab';
 import ItemList from './ItemList';
 import { cartItemStyles } from './Style';
@@ -33,6 +34,7 @@ const CartItem: React.FC<CartItemPropsTypes> = (props) => {
         <Grid item xs={12}>
           <ItemList itemList={itemData} />
         </Grid>
+        <CartFooter totalPrice={500} itemsQuantity={5} />
       </Grid>
     </Paper>
   );
