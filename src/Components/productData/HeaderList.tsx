@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Box } from "@material-ui/core";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
+import React, { useEffect, useState } from 'react';
+import { Grid, Box } from '@material-ui/core';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
 
-
-import { product } from "../../Types";
-import { productStyles } from "./style";
-import { productData } from "../../Data/Data";
-  
-
+import { product } from '../../Types';
+import { productStyles } from './style';
+import { productData } from '../../Data/Data';
 
 interface HeaderListProps {
-  productTitle: string[];
+  productTitle: { id: keyof product; label: string }[];
   onSort: (data: product[]) => void;
   productData: product[];
 }
@@ -20,61 +17,66 @@ enum sortType {
   category = 'Category',
   price = 'Price',
   tax = 'Tax',
-  name = "Name",
-  productDescription = "ProductDescription"
+  name = 'Name',
+  productDescription = 'ProductDescription'
 }
-
 
 const HeaderList: React.FC<HeaderListProps> = (props) => {
   const classes = productStyles();
   const { productTitle, productData, onSort } = props;
   const [sort, setSort] = useState<boolean>(false);
-  const [data,setData] = useState<product[]>(productData);
+  const [data, setData] = useState<product[]>(productData);
 
-  const handleSort = () => {
+  const handleSort = (title: keyof product) => {
     setSort(!sort);
-    productSort();
+    productSort(title);
   };
 
-  const productSort = () => {
-    
-    productData.sort((a, b) =>
-      a > b ? 1 : -1
-    );
+  const productSort = (title: keyof product) => {
+    productData.sort((a, b) => (a[title] > b[title] ? 1 : -1));
     let sortedData = [...productData];
     onSort(sortedData);
   };
-  
+
   useEffect(() => {}, [sort, data]);
 
   return (
     <Grid container spacing={0} className={classes.headerList}>
-      {productTitle.map((title: string) => {
-        if(title === "Tax(%)" ||title === "Price"  ){
-          return (<Grid item xs={1}>
-          <Box key={title} className={classes.headerItem}>
-            {title}
-            <SwapVertIcon
-              onClick={() => {
-                handleSort();
-              }}
-            />
-          </Box>
-        </Grid>)
-        }else{
-          return ( <Grid item xs={2}>
-          <Box key={title} className={classes.headerItem}>
-            {title}
-            <SwapVertIcon
-              onClick={() => {
-                handleSort();
-              }}
-            />
-          </Box>
-        </Grid>)
+      {productTitle.map((title) => {
+        if (title.label === 'Tax(%)' || title.label === 'Price') {
+          return (
+            <Grid item xs={1}>
+              <Box key={title.label} className={classes.headerItem}>
+                {title.label}
+                <SwapVertIcon
+                  onClick={() => {
+                    handleSort(title.id);
+                  }}
+                />
+              </Box>
+            </Grid>
+          );
+        } else {
+          return (
+            <Grid item xs={2}>
+              <Box key={title.label} className={classes.headerItem}>
+                {title.label}
+                <SwapVertIcon
+                  onClick={() => {
+                    handleSort(title.id);
+                  }}
+                />
+              </Box>
+            </Grid>
+          );
         }
-        
       })}
+      <Grid item xs={2}>
+        <Box key="action" className={classes.headerItem}>
+          Actions
+          <SwapVertIcon />
+        </Box>
+      </Grid>
     </Grid>
   );
 };

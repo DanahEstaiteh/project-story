@@ -1,13 +1,13 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import Button from '@material-ui/core/Button';
 import {
   makeStyles,
   createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-import { ButtonTheme, useStyles } from "./styles";
-import { Grid } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField/TextField";
+  ThemeProvider
+} from '@material-ui/core/styles';
+import { ButtonTheme, useStyles } from './styles';
+import { Grid } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField/TextField';
 
 interface PropsType {
   isLogin: boolean;
@@ -15,7 +15,7 @@ interface PropsType {
 }
 
 const handleClick = () => {
-  alert("login is clicked");
+  alert('login is clicked');
 };
 
 const Form: React.FC<PropsType> = (props) => {
@@ -27,7 +27,7 @@ const Form: React.FC<PropsType> = (props) => {
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ width: "41%" }}
+      style={{ width: '41%' }}
       className={classes.root}
     >
       <Grid item>
@@ -36,7 +36,7 @@ const Form: React.FC<PropsType> = (props) => {
             <h3 className={classes.formName}>MedicKabisha</h3>
             <h5 className={classes.formHeader}>Login to Your Account</h5>
           </Grid>
-          <form noValidate autoComplete="off" className={classes.form} >
+          <form noValidate autoComplete="off" className={classes.form}>
             <TextField
               variant="outlined"
               className={
@@ -46,7 +46,7 @@ const Form: React.FC<PropsType> = (props) => {
               }
               label="UserName"
               disabled={isLogin}
-              value={isLogin ? "Admin" : ""}
+              value={isLogin ? 'Admin' : ''}
               type="text"
               placeholder="UserName"
               fullWidth
@@ -61,7 +61,7 @@ const Form: React.FC<PropsType> = (props) => {
               type="password"
               disabled={isLogin}
               placeholder="Password"
-              value={isLogin ? "password" : ""}
+              value={isLogin ? 'password' : ''}
               fullWidth
             />
             <ThemeProvider theme={ButtonTheme}>
@@ -72,7 +72,7 @@ const Form: React.FC<PropsType> = (props) => {
                 variant="contained"
                 color="primary"
               >
-                Login{" "}
+                Login{' '}
               </Button>
             </ThemeProvider>
             <div>© Demo 2018</div>

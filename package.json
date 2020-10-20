@@ -28,8 +28,7 @@
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
     "react-paginate": "^6.5.0",
-    "react-scripts": "3.4.3",
-    "typescript": "^3.9.7"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,7 +36,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,7 +65,19 @@
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^6.0.22",
     "@types/yup": "^0.29.8",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
     "babel-loader": "^8.1.0",
-    "react-is": "^16.13.1"
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.13.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.4",
+    "prettier": "^2.1.2",
+    "react-is": "^16.13.1",
+    "typescript": "^3.9.7"
   }
 }

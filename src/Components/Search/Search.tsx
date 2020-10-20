@@ -1,38 +1,35 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Category, product } from "../../Types/index";
-import TextField from "@material-ui/core/TextField/TextField";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Category, product, ProductItem } from '../../Types/index';
+import TextField from '@material-ui/core/TextField/TextField';
+
+type DataType = product | Category | ProductItem;
 
 interface SearchPropsType {
-  onSearch: (newCat: product[]) => void;
-  Data: product[];
-  allData: product[];
+  onSearch: (newCat: DataType[]) => void;
+  Data: DataType[];
+  allData: DataType[];
   multiProp: boolean;
 }
 
 const Search: React.FC<SearchPropsType> = (props) => {
-  const { onSearch, Data, allData,multiProp } = props;
-  const [searchKey, setSearchKey] = useState<string>("");
- 
-  const handleSearch = () => {
-    if (searchKey !== "" && multiProp) {
-      let newData= Data.filter(x => Object.values(x)
-      .join(' ')
-      .toLowerCase()
-      .includes(searchKey.toLowerCase()));
-      onSearch(newData);
-      console.log({newData});
-    } else if(searchKey !== "" ){
-     // let newData = Data.filter((item) =>
-     // item["CategorieName"].includes(searchKey)
-   // );
+  const { onSearch, Data, allData, multiProp } = props;
+  const [searchKey, setSearchKey] = useState<string>('');
 
-    //onSearch(newData);
-    }else{
+  const handleSearch = () => {
+    if (searchKey !== '') {
+      let newData = Data.filter((x) =>
+        Object.values(x)
+          .join(' ')
+          .toLowerCase()
+          .includes(searchKey.toLowerCase())
+      );
+      onSearch(newData);
+      console.log({ newData });
+    } else {
       onSearch(allData);
     }
   };
-
 
   useEffect(() => {
     handleSearch();

@@ -1,39 +1,37 @@
-import React, { useState } from 'react'
-import  {KeyboardDatePicker } from "@material-ui/pickers";
-import {MuiPickersUtilsProvider}  from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import React, { useState } from 'react';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 interface DatePickerProps {
-  onChange: (date : Date) => void;
+  onChange: (date: Date) => void;
   name: string;
   minDate: Date;
 }
 
-const DatePicker:React.FC<DatePickerProps> = (props) =>  {
-
+const DatePicker: React.FC<DatePickerProps> = (props) => {
   const [selectedDate, handleDateChange] = useState(new Date());
-  const { onChange,name , minDate} = props;
+  const { onChange, name, minDate } = props;
 
-const onChangeFirst = (date : Date) => {
-  handleDateChange(date);
-  onChange(selectedDate);
-}
+  const onChangeFirst = (date: Date) => {
+    handleDateChange(date);
+    onChange(selectedDate);
+  };
 
-    return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
+  return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
         clearable
         name={name}
         value={selectedDate}
         placeholder={Date().toString()}
-        onChange={date => onChangeFirst(date as Date)}
-        minDate={ minDate}
+        onChange={(date) => onChangeFirst(date as Date)}
+        minDate={minDate}
         format="dd/MM/yyyy"
       />
-         </MuiPickersUtilsProvider>
-    )
-}
-
+    </MuiPickersUtilsProvider>
+  );
+};
 
 export default DatePicker;

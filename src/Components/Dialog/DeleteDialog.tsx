@@ -1,24 +1,28 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import { Category } from "../../Types/index";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import { Cart, Category, product } from '../../Types/index';
+
+type DataType = Category | product | Cart;
 
 interface AlertDialogProps {
-  id: string;
-  onDelete: (newCat: Category[]) => void;
+  id: string | number;
+  onDelete: (newData: DataType[]) => void;
   isOpen: boolean;
   onClose: () => void;
-  Data: Category[];
+  Data: DataType[];
+  dataType: string;
 }
 const DeleteDialog: React.FC<AlertDialogProps> = (props) => {
-  const { id, onDelete, isOpen, onClose, Data } = props;
+  const { id, onDelete, isOpen, onClose, Data, dataType } = props;
 
   const handleDelete = () => {
-    const newCategories = Data.filter((cat) => cat.id !== id);
-    onDelete(newCategories);
+    const newData = Data.filter((record) => record.id !== id);
+    onDelete(newData);
+    console.log({ id });
     onClose();
   };
 
@@ -31,7 +35,7 @@ const DeleteDialog: React.FC<AlertDialogProps> = (props) => {
     >
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this record?
+          Are you sure you want to delete this {dataType}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

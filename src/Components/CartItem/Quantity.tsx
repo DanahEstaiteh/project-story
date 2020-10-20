@@ -1,0 +1,43 @@
+import React, { useState } from 'react';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import { TextField } from '@material-ui/core';
+import { cartItemStyles } from './Style';
+
+const Quantity: React.FC = () => {
+  const classes = cartItemStyles();
+  const [count, setCount] = useState<number>(1);
+
+  const handleIncrease = () => {
+    let newCount = count + 1;
+    setCount(newCount);
+  };
+  const handleDecrease = () => {
+    let newCount = count - 1;
+    newCount > 0 ? setCount(newCount) : setCount(0);
+  };
+  const handleCountChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    let newCount = parseInt(e.target.value, 10);
+    setCount(newCount);
+  };
+  return (
+    <div>
+      <AddBoxIcon className={classes.quantityIcon} onClick={handleIncrease} />
+      <TextField
+        variant="outlined"
+        className={classes.quantityText}
+        value={count}
+        onChange={(
+          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+        ) => handleCountChange(e)}
+      />
+      <IndeterminateCheckBoxIcon
+        className={classes.quantityIcon}
+        onClick={handleDecrease}
+      />
+    </div>
+  );
+};
+export default Quantity;

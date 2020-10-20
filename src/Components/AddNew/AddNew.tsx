@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { categoryStyles } from "../CategoriesList/Styles";
-import { Category } from "../../Types";
+import React, { useEffect, useState } from 'react';
+import { categoryStyles } from '../CategoriesList/Styles';
+import { Category } from '../../Types';
 
-import NewDialog from "../Dialog/NewDialog";
+import NewDialog from '../Dialog/NewDialog';
 
 interface AddNewProps {
   onSubmit: (newCat: Category[]) => void;

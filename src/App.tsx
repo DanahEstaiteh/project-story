@@ -1,52 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import Form from './Components/index';
-import PosHeader from './Components/PosHeader/PosHeader'
-import CategoriesList from './Components/CategoriesList/CategoriesList';
-import EditDialog from './Components/Dialog/EditDialog';
-import Search from './Components/Search/Search';
-import {Category, product} from '../src/Types/index';
-import { categoryData,productData } from './Data/Data';
-import ProductDataList from './Components/productData/productDataList';
+import { Cart, product, ProductItem } from '../src/Types/index';
+import { cartData, categoryData, productData } from './Data/Data';
 import Product from './Components/productData/Product';
-import FilterProductList from './Components/FilterProductList/FilterProductList';
-import ProductForm from './Components/ProductForm/ProductForm';
+import StockTabs from './Components/StockItems/StockTabs';
+import { getCategoryName } from './Components/CategoriesList/CategoryFunctions';
+import ProductItems from './Components/StockItems/ProductItems';
+import { getProductItem } from './Components/productData/ProductFunction';
+import StockItems from './Components/StockItems/StockItems';
+import CartTab from './Components/CartItem/CartTab';
+import { setDate } from 'date-fns';
+import CartItem from './Components/CartItem/CartItem';
 
 function App() {
-  //const [data, setData] = React.useState<Category[]>(categoryData);
-  const [data, setData] = React.useState<product[]>(productData);
-  const initialErrors = {
-    name: "",
-   rawPrice:  "",
-   code:  "",
-   category:  "",
-   expirationDate:  "",
-   price:  "",
-   count:  "",
-  }
-  const initialValues={
-    code: "",
-    name: "",
-    category: "",
-    productDescription: "",
-    tax: 12,
-    price: 12,
-    img: "",
-    rawPrice: 12,
-    count: 12,
-    expirationDate: new Date,
-  }
+  const products: ProductItem[] = getProductItem('home');
+
+  // const [data] = React.useState<product[]>(productData);
+  //const categoryNames = getCategoryName(categoryData);
+
   return (
     <div className="App">
-      
-     {/*  <ProductDataList productData={productData} /> */}
-     {/* <Product productData={data}/> */}
-      <Product productData={data} /> 
-    {/*  <ProductForm initialValues={initialValues} initialErrors={initialErrors}  /> */}
+      {/*  <ProductDataList productData={productData} /> */}
+      {/* <Product productData={data}/> */}
+      {/*  <Product productData={data} /> */}
+      {/*  <ProductForm initialValues={initialValues} initialErrors={initialErrors}  /> */}
+      {/* <StockItems categoryNames={categoryNames} productsItem={products} /> */}
+      <CartItem cartList={cartData} />
     </div>
   );
-  
 }
 
 export default App;

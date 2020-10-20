@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { Category } from "../../Types/index";
-import { useEffect } from "react";
-import { useStyles } from "./style";
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Category } from '../../Types/index';
+import { useEffect } from 'react';
+import { useStyles } from './style';
 
 interface EdittDialogProps {
   isOpen: boolean;
@@ -22,9 +22,9 @@ const EditDialog: React.FC<EdittDialogProps> = (props) => {
 
   const handleSubmit = () => {
     const index = Data.findIndex(
-      (cat: Category) => cat["CategorieName"] === CategoryName
+      (cat: Category) => cat['categoryName'] === CategoryName
     );
-    Data[index].CategorieName = nameInput;
+    Data[index].categoryName = nameInput;
     const newData = [...Data];
     onSubmit(newData);
     onClose();
@@ -44,14 +44,14 @@ const EditDialog: React.FC<EdittDialogProps> = (props) => {
         aria-labelledby="form-dialog-title"
         PaperProps={{
           style: {
-            overflow: "hidden",
-          },
+            overflow: 'hidden'
+          }
         }}
       >
         <DialogTitle className={classes.dialogHeader} id="form-dialog-title">
           Edit {CategoryName}
         </DialogTitle>
-        <DialogContent style={{ overflow: "hidden" }}>
+        <DialogContent style={{ overflow: 'hidden' }}>
           <label className={classes.dialogLabel} htmlFor="name">
             Category Name
           </label>

@@ -4,18 +4,17 @@ import green from '@material-ui/core/colors/green';
 
 export const projectTheme = createMuiTheme({
   palette: {
-    primary:{
-        main: '#81889B',
+    primary: {
+      main: '#81889B'
     },
     secondary: {
-        main: '#18293D',
+      main: '#18293D'
     },
     success: {
-      main: '#2ECC71',
+      main: '#2ECC71'
     },
     warning: {
-        main: '#E74C3C',
-    },
-  },
- 
+      main: '#E74C3C'
+    }
+  }
 });

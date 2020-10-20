@@ -1,10 +1,10 @@
-import Button from "@material-ui/core/Button/Button";
-import TextField from "@material-ui/core/TextField/TextField";
-import React, { useState } from "react";
-import { FilterProductStyles } from "./style";
-import Controls from "../Controls";
-import { productData } from "../../Data/Data";
-import { product } from "../../Types";
+import Button from '@material-ui/core/Button/Button';
+import TextField from '@material-ui/core/TextField/TextField';
+import React, { useState } from 'react';
+import { FilterProductStyles } from './style';
+import Controls from '../Controls';
+import { productData } from '../../Data/Data';
+import { product } from '../../Types';
 
 interface filterPropsType {
   onFilter: (newData: product[]) => void;
@@ -26,13 +26,21 @@ const FilterProductList: React.FC<filterPropsType> = (props) => {
   return (
     <div className={classes.filterContainer}>
       <p>Expiration Date</p>
-      
-      <p>From</p>
-      <Controls.DatePicker name="from" onChange={(date) => setFromDate(date)} minDate={new Date("1/1/1900")}/>
-      <p>To</p>
-      <Controls.DatePicker name="to" onChange={(date) => setToDate(date)} minDate={new Date("1/1/1900")}/>
 
-      <Controls.MyButton 
+      <p>From</p>
+      <Controls.DatePicker
+        name="from"
+        onChange={(date) => setFromDate(date)}
+        minDate={new Date('1/1/1900')}
+      />
+      <p>To</p>
+      <Controls.DatePicker
+        name="to"
+        onChange={(date) => setToDate(date)}
+        minDate={new Date('1/1/1900')}
+      />
+
+      <Controls.MyButton
         text="Apply Filter"
         variant="outlined"
         onClick={() => handleFilter()}
@@ -40,7 +48,6 @@ const FilterProductList: React.FC<filterPropsType> = (props) => {
         color="default"
         type="button"
       />
-      
     </div>
   );
 };

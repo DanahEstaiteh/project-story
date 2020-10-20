@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Box } from "@material-ui/core";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
+import React, { useEffect, useState } from 'react';
+import { Grid, Box } from '@material-ui/core';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
 
-import { Category, CategoryTitle } from "../../Types";
-import { categoryStyles } from "./Styles";
+import { Category, CategoryTitle } from '../../Types';
+import { categoryStyles } from './Styles';
 
 interface HeaderListProps {
   categoryTitle: CategoryTitle[];
@@ -19,7 +19,7 @@ const HeaderList: React.FC<HeaderListProps> = (props) => {
 
   const handleSort = (title: string) => {
     setSort(!sort);
-    if (title === "CreatedAt") {
+    if (title === 'createdAt') {
       CategoryDateSort();
     } else {
       CategoryNameSort();
@@ -28,13 +28,13 @@ const HeaderList: React.FC<HeaderListProps> = (props) => {
 
   const CategoryNameSort = () => {
     categoryData.sort((a, b) =>
-      a["CategorieName"] > b["CategorieName"] ? 1 : -1
+      a['categoryName'] > b['categoryName'] ? 1 : -1
     );
     let sortedData = [...categoryData];
     onSort(sortedData);
   };
   const CategoryDateSort = () => {
-    categoryData.sort((a, b) => (a["CreatedAt"] > b["CreatedAt"] ? 1 : -1));
+    categoryData.sort((a, b) => (a['createdAt'] > b['createdAt'] ? 1 : -1));
     let sortedData = [...categoryData];
     onSort(sortedData);
   };

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Box } from "@material-ui/core";
-import ClearIcon from "@material-ui/icons/Clear";
-import EditIcon from "@material-ui/icons/Edit";
-import { format } from "date-fns";
+import React, { useEffect, useState } from 'react';
+import { Grid, Box } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
+import EditIcon from '@material-ui/icons/Edit';
+import { format } from 'date-fns';
 
-import EditDialog from "../Dialog/EditDialog";
+import EditDialog from '../Dialog/EditDialog';
 
-import { Category } from "../../Types";
-import { categoryStyles } from "./Styles";
-import Search from "../Search/Search";
-import TablePaginationDemo from "../Pagination/TablePaginationDemo";
-import AddNew from "../AddNew/AddNew";
-import HeaderList from "./HeaderList";
-import DeleteDialog from "../Dialog/DeleteDialog";
-import { categoryTitle } from "../../Data/Data";
+import { Category } from '../../Types';
+import { categoryStyles } from './Styles';
+import Search from '../Search/Search';
+import TablePaginationDemo from '../Pagination/TablePaginationDemo';
+import AddNew from '../AddNew/AddNew';
+import HeaderList from './HeaderList';
+import DeleteDialog from '../Dialog/DeleteDialog';
+import { categoryTitle } from '../../Data/Data';
 
 interface CategoryListProps {
   categoryData: Category[];
@@ -25,8 +25,8 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
   const [data, setData] = useState<Category[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
-  const [itemId, setItemId] = useState<string>("");
-  const [itemName, setItemName] = useState<string>("");
+  const [itemId, setItemId] = useState<string>('');
+  const [itemName, setItemName] = useState<string>('');
   const pages = [5, 10, 15];
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
@@ -76,11 +76,11 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
         {dataAfterPaging().map((Category: Category) => (
           <Grid container spacing={0} className={classes.row}>
             <Grid item xs={4} className={classes.listItem}>
-              <Box key={Category.id}>{Category.CategorieName}</Box>
+              <Box key={Category.id}>{Category.categoryName}</Box>
             </Grid>
             <Grid item xs={4} className={classes.listItem}>
               <Box key={Category.id}>
-                {format(Category.CreatedAt, "dd-mm-yyyy tt")}
+                {format(Category.createdAt, 'dd-mm-yyyy tt')}
               </Box>
             </Grid>
             <Grid item xs={4} className={classes.listItem}>
@@ -91,7 +91,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
                 />
                 <EditIcon
                   className={classes.actionIcon}
-                  onClick={() => handleOpenEditDialog(Category.CategorieName)}
+                  onClick={() => handleOpenEditDialog(Category.categoryName)}
                 />
               </Box>
             </Grid>
@@ -101,8 +101,9 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
           Data={data}
           id={itemId}
           isOpen={open}
-          onDelete={(data) => setData(data)}
+          onDelete={(data) => setData(data as Category[])}
           onClose={handleClose}
+          dataType="category"
         />
         <EditDialog
           Data={data}
@@ -112,16 +113,16 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
           onClose={handleCloseEditDialog}
         />
       </Grid>
-      {/* <TablePaginationDemo
+      <TablePaginationDemo
         count={data.length}
         data={data}
-        onChangePage={(data) => setData(data)}
+        onChangePage={(data) => setData(data as Category[])}
         onHandleChangePage={handleChangePage}
         onHandleChangeRowsPerPage={handleChangeRowsPerPage}
         page={page}
         rowsPerPage={rowsPerPage}
         pages={pages}
-      /> */}
+      />
     </>
   );
 };
@@ -129,7 +130,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
 const CategoriesList: React.FC<CategoryListProps> = (props) => {
   const { categoryData } = props;
   const [data, setData] = useState<Category[]>(categoryData);
- 
+
   useEffect(() => {
     setData(data);
   }, [data]);
@@ -149,7 +150,6 @@ const CategoriesList: React.FC<CategoryListProps> = (props) => {
         categoryTitle={categoryTitle}
         categoryData={data}
         onSort={(data) => setData(data)}
-       
       />
       <CategoryData categoryData={data} />
     </>

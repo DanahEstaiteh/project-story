@@ -1,8 +1,8 @@
-import React from "react";
-import Link from "@material-ui/core/Link";
-import logo from "../Images/pos-icon.png";
-import UserImage from "../Images/user.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import Link from '@material-ui/core/Link';
+import logo from '../Images/pos-icon.png';
+import UserImage from '../Images/user.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCreditCard,
   faUsers,
@@ -12,16 +12,16 @@ import {
   faDollarSign,
   faChartLine,
   faSignOutAlt,
-  faMoneyBill,
-} from "@fortawesome/free-solid-svg-icons";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import LanguageIcon from "@material-ui/icons/Language";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import Avatar from "@material-ui/core/Avatar";
-import useStyles from "./styles";
-import { Collapse } from "@material-ui/core";
+  faMoneyBill
+} from '@fortawesome/free-solid-svg-icons';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import LanguageIcon from '@material-ui/icons/Language';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import Avatar from '@material-ui/core/Avatar';
+import useStyles from './styles';
+import { Collapse } from '@material-ui/core';
 
 const preventDefault = (event: React.MouseEvent<HTMLElement>) =>
   event.preventDefault();
@@ -73,7 +73,7 @@ const LanguageList: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   const classes = useStyles();
 
-  const language = ["arabic", "Hindi", "Chinese"];
+  const language = ['arabic', 'Hindi', 'Chinese'];
   const handleClick = () => {
     setOpen(!open);
   };

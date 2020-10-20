@@ -1,9 +1,9 @@
-import { InputLabel , Select as MuiSelect} from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText/FormHelperText";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import React from "react";
-import { Category, CategoryTitle } from "../../Types";
+import { InputLabel, Select as MuiSelect } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText/FormHelperText';
+import MenuItem from '@material-ui/core/MenuItem/MenuItem';
+import React from 'react';
+import { Category, CategoryTitle } from '../../Types';
 
 interface SelectPropsType {
   name: string;
@@ -15,23 +15,18 @@ interface SelectPropsType {
 }
 
 const Select: React.FC<SelectPropsType> = (props) => {
-  const { name, label, value, error = "", onChange, options } = props;
+  const { name, label, value, error = '', onChange, options } = props;
 
   return (
-    <FormControl variant="outlined" {...(error && {error:true})}>
+    <FormControl variant="outlined" {...(error && { error: true })}>
       <InputLabel>{label}</InputLabel>
-      <MuiSelect
-        label={label}
-        name={name}
-        value={value}
-        onChange={onChange}
-      >
+      <MuiSelect label={label} name={name} value={value} onChange={onChange}>
         <MenuItem value=""> None</MenuItem>
-        {
-            options.map((item) => (
-                <MenuItem key={item.id} value={item.id}>{item.title}</MenuItem>
-            ))
-        }
+        {options.map((item) => (
+          <MenuItem key={item.id} value={item.id}>
+            {item.title}
+          </MenuItem>
+        ))}
       </MuiSelect>
       {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>

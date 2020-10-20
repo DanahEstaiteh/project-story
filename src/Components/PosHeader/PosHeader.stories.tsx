@@ -3,13 +3,10 @@ import React from 'react';
 import PosHeader from '../PosHeader/PosHeader';
 
 export default {
-    title: "Header",
-    Component: PosHeader,
-    
-  };
+  title: 'Header',
+  Component: PosHeader
+};
 
+const Template: Story = () => <PosHeader />;
 
-  
-  const Template: Story = () => <PosHeader />;
-
-  export const Header = Template.bind({});
+export const Header = Template.bind({});
