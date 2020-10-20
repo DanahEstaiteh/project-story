@@ -48,6 +48,7 @@ export interface Cart {
 }
 
 export interface Item {
+  id: number;
   cartId: number;
   name: string;
   price: number;

@@ -43,6 +43,25 @@ const CartTab: React.FC<CartTAbPropsType> = (props) => {
   return (
     <div className={classes.appBar}>
       <List>
+        {cartList.map((cart) => (
+          <ListItem key={cart.id + ''} className={classes.tab}>
+            <Button
+              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                handleTab(cart.id)
+              }
+              className={`${classes.buttonTab} ${
+                cart.id === active ? `${classes.selectedTab}` : ''
+              }`}
+            >
+              <div className={classes.id}>{cart.id}</div>
+              <div className={classes.time}>
+                {cart.time.getHours().toString() +
+                  ':' +
+                  cart.time.getMinutes().toString()}
+              </div>
+            </Button>
+          </ListItem>
+        ))}
         <ListItem className={classes.tab}>
           <Button
             onClick={handleAddTab}
@@ -63,25 +82,6 @@ const CartTab: React.FC<CartTAbPropsType> = (props) => {
             <RemoveIcon />
           </Button>
         </ListItem>
-        {cartList.map((cart) => (
-          <ListItem key={cart.id + ''} className={classes.tab}>
-            <Button
-              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-                handleTab(cart.id)
-              }
-              className={`${classes.buttonTab} ${
-                cart.id === active ? `${classes.selectedTab}` : ''
-              }`}
-            >
-              <div className={classes.id}>{cart.id}</div>
-              <div className={classes.time}>
-                {cart.time.getHours().toString() +
-                  ':' +
-                  cart.time.getMinutes().toString()}
-              </div>
-            </Button>
-          </ListItem>
-        ))}
         <DeleteDialog
           Data={data as Cart[]}
           id={active}

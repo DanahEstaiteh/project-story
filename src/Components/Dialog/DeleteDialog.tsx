@@ -4,9 +4,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { Cart, Category, product } from '../../Types/index';
+import { Cart, Category, Item, product } from '../../Types/index';
 
-type DataType = Category | product | Cart;
+type DataType = Category | product | Cart | Item;
 
 interface AlertDialogProps {
   id: string | number;

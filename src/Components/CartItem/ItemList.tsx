@@ -1,34 +1,59 @@
+import React, { useEffect, useState } from 'react';
+import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
 import Grid from '@material-ui/core/Grid/Grid';
-import List from '@material-ui/core/List/List';
-import ListItem from '@material-ui/core/ListItem/ListItem';
-import React from 'react';
-import { Item } from '../../Types';
+import { Item } from '../../Types/index';
+import Quantity from './Quantity';
+import { SelectedRowCount } from '@material-ui/data-grid';
 import { cartItemStyles } from './Style';
-import ItemCart from './Item';
+import Paper from '@material-ui/core/Paper';
+import ListItem from '@material-ui/core/ListItem';
+import DeleteDialog from '../Dialog/DeleteDialog';
+import List from '@material-ui/core/List/List';
+import CartItem from './CartItem';
 
-interface ItemListPropsType {
+interface ItemPropsType {
   itemList: Item[];
+  onDelete: (data: Item[]) => void;
+  onChangeCount: (data: number) => void;
+  onChangePrice: (data: number) => void;
 }
-const headerlist = ['Product', 'Price', 'Quantity', 'Total'];
 
-const ItemList: React.FC<ItemListPropsType> = (props) => {
-  const { itemList } = props;
+const ItemList: React.FC<ItemPropsType> = (props) => {
+  const { itemList, onDelete, onChangeCount, onChangePrice } = props;
+  //const [countItem, setCountItem] = useState<number>(0);
+  const [item, setItem] = useState<{ count: number; price: number }>({
+    count: 0,
+    price: 0
+  });
+  const [countItem, setCountItem] = useState<number>(item.count);
+  const [data, setData] = useState<Item[]>(itemList);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalCount, setTotalCount] = useState<number>(0);
   const classes = cartItemStyles();
+
+  useEffect(() => {
+    if (item.count) {
+      setTotalCount(totalCount + item.count);
+      setTotalPrice(item.price * item.count + totalPrice);
+    }
+
+    console.log({ totalCount, totalPrice });
+
+    onDelete(data);
+  }, [data, item]);
   return (
-    <Grid>
-      <List className={classes.headerList}>
-        {headerlist.map((header) => (
-          <ListItem key={header} className={classes.listItem}>
-            {header}
-          </ListItem>
-        ))}
-      </List>
-      <List>
-        {itemList.map((item) => (
-          <ItemCart key={item.name} item={item} />
-        ))}
-      </List>
-    </Grid>
+    <List>
+      {itemList.map((item: Item) => (
+        <CartItem
+          itemList={data}
+          item={item}
+          onDelete={(data) => setData(data)}
+          onChangeItemCount={(data) => {
+            setItem(data);
+          }}
+        />
+      ))}
+    </List>
   );
 };
 

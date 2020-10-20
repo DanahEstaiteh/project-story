@@ -19,7 +19,7 @@ const Quantity: React.FC<QuantityPropsType> = (props) => {
   };
   const handleDecrease = () => {
     let newCount = count - 1;
-    newCount > 0 ? setCount(newCount) : setCount(0);
+    newCount > 0 ? setCount(newCount) : setCount(1);
   };
   const handleCountChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

@@ -10,7 +10,7 @@ import { getProductItem } from './Components/productData/ProductFunction';
 import StockItems from './Components/StockItems/StockItems';
 import CartTab from './Components/CartItem/CartTab';
 import { setDate } from 'date-fns';
-import CartItem from './Components/CartItem/CartItem';
+import CartSection from './Components/CartItem/CartSection';
 import CartFooter from './Components/CartItem/CartFooter';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
       {/*  <Product productData={data} /> */}
       {/*  <ProductForm initialValues={initialValues} initialErrors={initialErrors}  /> */}
       {/* <StockItems categoryNames={categoryNames} productsItem={products} /> */}
-      <CartItem cartList={cartData} />
+      <CartSection cartList={cartData} />
     </div>
   );
 }
