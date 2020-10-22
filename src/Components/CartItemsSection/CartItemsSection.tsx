@@ -20,8 +20,12 @@ const CartItemsSection: React.FC<CartItemsSectionPropsTypes> = (props) => {
   const classes = cartItemStyles();
 
   const handleCartDelete = (id: number) => {
-    const newData = cartList.filter((item) => item.id !== id);
-    setData(newData);
+    setData(cartList.filter((item) => item.id !== id));
+
+    console.log({ data });
+  };
+  const handleCancelCart = (id: number) => {
+    setData(cartList.filter((item) => item.id !== id));
 
     console.log({ data });
   };
@@ -49,7 +53,7 @@ const CartItemsSection: React.FC<CartItemsSectionPropsTypes> = (props) => {
         </Grid>
         <Grid item xs={12}>
           <CartSection
-            onDelete={() => handleCartDelete(active)}
+            onDelete={() => handleCancelCart(active)}
             itemList={activeCartData}
           />
         </Grid>
