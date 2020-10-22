@@ -8,10 +8,10 @@ import { getCategoryName } from './Components/CategoriesList/CategoryFunctions';
 import ProductItems from './Components/StockItems/ProductItems';
 import { getProductItem } from './Components/productData/ProductFunction';
 import StockItems from './Components/StockItems/StockItems';
-import CartTab from './Components/CartItem/CartTab';
+import CartTab from './Components/CartItemsSection/CartTab';
 import { setDate } from 'date-fns';
-import CartSection from './Components/CartItem/CartSection';
-import CartFooter from './Components/CartItem/CartFooter';
+import CartItemsSection from './Components/CartItemsSection/CartItemsSection';
+import CartFooter from './Components/CartItemsSection/CartSectionFooter';
 
 function App() {
   const products: ProductItem[] = getProductItem('home');
@@ -26,7 +26,7 @@ function App() {
       {/*  <Product productData={data} /> */}
       {/*  <ProductForm initialValues={initialValues} initialErrors={initialErrors}  /> */}
       {/* <StockItems categoryNames={categoryNames} productsItem={products} /> */}
-      <CartSection cartList={cartData} />
+      <CartItemsSection cartList={cartData} />
     </div>
   );
 }

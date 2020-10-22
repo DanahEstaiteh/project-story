@@ -1,4 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { projectTheme } from '../../Styles/Style';
 
 export const cartFooterStyles = makeStyles({
   topic: {
@@ -11,6 +12,7 @@ export const cartFooterStyles = makeStyles({
     padding: '10px'
   },
   list: {
+    width: 'fit-content',
     padding: '10px',
     '& >li': {
       height: '45px',
@@ -37,5 +39,30 @@ export const cartFooterStyles = makeStyles({
     '& > *': {
       padding: '10px'
     }
+  },
+  listItem: {
+    height: '150px',
+    overflowY: 'scroll'
+  },
+  payamentButton: {
+    backgroundColor: '#2ECC71',
+    padding: '10px',
+    width: '250px',
+    height: '50px',
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  cancelButton: {
+    backgroundColor: 'red',
+    padding: '10px',
+    width: '250px',
+    height: '50px',
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 });

@@ -12,17 +12,19 @@ interface CartTAbPropsType {
   cartList: Cart[];
   active: number;
   handleTab: (a: number) => void;
-  onAddOrDelete: (data: Cart[]) => void;
+  onDelete: (id: number) => void;
 }
 
 const CartTab: React.FC<CartTAbPropsType> = (props) => {
-  const { cartList, active, handleTab, onAddOrDelete } = props;
+  const { cartList, active, handleTab, onDelete } = props;
   const [data, setData] = useState<Cart[]>(cartList);
   const [open, setOpen] = useState<boolean>(false);
   const classes = cartItemStyles();
   const handleAddTab = () => {
-    let lastId = cartList.length ? cartList[cartList.length - 1].id : 2;
+    let lastId = data.length ? data[cartList.length - 1].id : 1;
+    console.log({ lastId });
     let newCart = { id: lastId + 1, time: new Date() };
+    console.log({ newCart });
     data.unshift(newCart);
     const newData = [...data];
     setData(newData);
@@ -37,13 +39,12 @@ const CartTab: React.FC<CartTAbPropsType> = (props) => {
   };
 
   useEffect(() => {
-    onAddOrDelete(data);
-    console.log({ data });
-  }, [data]);
+    setData(cartList);
+  }, [cartList]);
   return (
     <div className={classes.appBar}>
       <List>
-        {cartList.map((cart) => (
+        {data.map((cart) => (
           <ListItem key={cart.id + ''} className={classes.tab}>
             <Button
               onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
@@ -83,13 +84,12 @@ const CartTab: React.FC<CartTAbPropsType> = (props) => {
           </Button>
         </ListItem>
         <DeleteDialog
-          Data={data as Cart[]}
-          id={active}
           isOpen={open}
-          onDelete={(data) => setData(data as Cart[])}
           onClose={handleClose}
-          dataType="cart"
-        />
+          onConfirm={() => onDelete(active)}
+        >
+          Are you sure you want to delete this cart?
+        </DeleteDialog>
       </List>
     </div>
   );

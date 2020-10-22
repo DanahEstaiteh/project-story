@@ -24,7 +24,7 @@ const Quantity: React.FC<QuantityPropsType> = (props) => {
   const handleCountChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    let newCount = parseInt(e.target.value, 10);
+    let newCount = e.target.value ? parseInt(e.target.value, 10) : 1;
     setCount(newCount);
   };
 

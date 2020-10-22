@@ -1,19 +1,40 @@
-import { List, ListItem, TextField } from '@material-ui/core';
+import { Button, List, ListItem, ThemeProvider } from '@material-ui/core';
 import Box from '@material-ui/core/Box/Box';
 import Divider from '@material-ui/core/Divider/Divider';
 import React, { useEffect, useState } from 'react';
 import { cartFooterStyles } from './FooterStyle';
+import { projectTheme } from '../../Styles/Style';
+import DeleteDialog from '../Dialog/DeleteDialog';
+import PopUp from '../PopUp/PopUp';
 
-interface CartFooterPropsType {
+interface CartSectionFooterPropsType {
   totalPrice: number;
   itemsQuantity: number;
+  onDelete: () => void;
 }
 
-const CartFooter: React.FC<CartFooterPropsType> = (props) => {
-  const { totalPrice, itemsQuantity } = props;
+const CartSectionFooter: React.FC<CartSectionFooterPropsType> = (props) => {
+  const { totalPrice, itemsQuantity, onDelete } = props;
   const [tax, setTax] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [total, setTotal] = useState<number>(totalPrice);
+  const [open, setOpen] = useState<boolean>(false);
+  const [openPopUp, setOpenPopUp] = useState<boolean>(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClosePopUp = () => {
+    setOpenPopUp(false);
+  };
+
+  const handleOpenPopUp = () => {
+    setOpenPopUp(true);
+  };
 
   const handleDiscountChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -28,6 +49,11 @@ const CartFooter: React.FC<CartFooterPropsType> = (props) => {
     setTax(newTax ? newTax : 0);
   };
   const classes = cartFooterStyles();
+
+  useEffect(() => {
+    setTax(0);
+    setDiscount(0);
+  }, [totalPrice, itemsQuantity]);
   useEffect(() => {
     let taxEffect = totalPrice * (tax / 100);
     let discountEffect = (discount / 100) * totalPrice;
@@ -81,11 +107,41 @@ const CartFooter: React.FC<CartFooterPropsType> = (props) => {
         <Divider />
         <ListItem>
           <Box className={classes.topic}>Total</Box>
-          <Box className={classes.total}>{total} GTQ</Box>
+          <Box className={classes.total}>{total ? total : totalPrice} GTQ</Box>
         </ListItem>
       </List>
+      <footer className={classes.footer}>
+        <Button
+          variant="contained"
+          className={classes.cancelButton}
+          onClick={handleOpen}
+        >
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          className={classes.payamentButton}
+          onClick={handleOpenPopUp}
+        >
+          PAYAMENT
+        </Button>
+        <DeleteDialog isOpen={open} onClose={handleClose} onConfirm={onDelete}>
+          Are you sure you want to delete this cart?
+        </DeleteDialog>
+        <PopUp
+          title="Payment"
+          openPopup={openPopUp}
+          setOpenPopup={setOpenPopUp}
+        >
+          <>
+            <Box className={classes.total}>
+              {total ? total : totalPrice} GTQ
+            </Box>
+          </>
+        </PopUp>
+      </footer>
     </>
   );
 };
 
-export default CartFooter;
+export default CartSectionFooter;

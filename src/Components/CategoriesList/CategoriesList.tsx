@@ -98,12 +98,9 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
           </Grid>
         ))}
         <DeleteDialog
-          Data={data}
-          id={itemId}
           isOpen={open}
-          onDelete={(data) => setData(data as Category[])}
           onClose={handleClose}
-          dataType="category"
+          onConfirm={() => {}}
         />
         <EditDialog
           Data={data}
