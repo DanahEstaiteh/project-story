@@ -1,21 +1,16 @@
 import Box from '@material-ui/core/Box/Box';
 import Grid from '@material-ui/core/Grid/Grid';
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { ProductItem } from '../../Types';
 import { stockItemStyles } from './Style';
 
 interface ProductItemsProps {
   products: ProductItem[];
-}
-
-interface ProductPriceAndNameProps {
-  name: string;
-  price: number;
+  onMoveItem: (item: ProductItem) => void;
 }
 
 const ProductItems = (props: ProductItemsProps) => {
-  const { products } = props;
+  const { products, onMoveItem } = props;
   const classes = stockItemStyles();
 
   const handleMouseOver = (
@@ -23,7 +18,6 @@ const ProductItems = (props: ProductItemsProps) => {
     count: number
   ) => {
     e.currentTarget.innerHTML = '<p>' + count + '</p>';
-    console.log(e.currentTarget);
   };
 
   const handleMouseLeave = (
@@ -33,13 +27,12 @@ const ProductItems = (props: ProductItemsProps) => {
   ) => {
     e.currentTarget.innerHTML =
       '<p>' + name + '</p>' + '<p>' + price + ' EURO</p>';
-    console.log(e.currentTarget.innerHTML);
   };
 
   return (
     <Grid container className={classes.container}>
       {products.map((item) => (
-        <Grid item xs={2} key={item.name}>
+        <Grid item xs={3} key={item.name}>
           <Box
             id={item.name}
             className={classes.box}
@@ -47,6 +40,7 @@ const ProductItems = (props: ProductItemsProps) => {
               backgroundColor: item.color,
               backgroundImage: `Url(${process.env.PUBLIC_URL + item.img})`
             }}
+            onClick={() => onMoveItem(item)}
             onMouseOver={(e: React.MouseEvent<HTMLElement, MouseEvent>) =>
               handleMouseOver(e, item.count)
             }

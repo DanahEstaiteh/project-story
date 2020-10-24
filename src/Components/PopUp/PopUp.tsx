@@ -14,10 +14,11 @@ interface PopupPropsType {
   title: string;
   openPopup: boolean;
   setOpenPopup: (isOpen: boolean) => void;
+  color: string;
 }
 
 const PopUp: React.FC<PopupPropsType> = (props) => {
-  const { title, openPopup, setOpenPopup, children } = props;
+  const { color, title, openPopup, setOpenPopup, children } = props;
   const classes = popupStyles();
   return (
     <Dialog
@@ -25,7 +26,10 @@ const PopUp: React.FC<PopupPropsType> = (props) => {
       maxWidth="md"
       classes={{ paper: classes.dialogWrapper }}
     >
-      <DialogTitle className={classes.dialogTitle}>
+      <DialogTitle
+        className={classes.dialogTitle}
+        style={{ backgroundColor: color }}
+      >
         <div style={{ display: 'flex' }}>
           <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
             {title}

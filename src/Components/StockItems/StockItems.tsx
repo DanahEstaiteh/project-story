@@ -11,10 +11,11 @@ import Search from '../Search/Search';
 interface StockItemsPropsType {
   categoryNames: CategoryTitle[];
   productsItem: ProductItem[];
+  onMoveItem: (item: ProductItem) => void;
 }
 
 const StockItems: React.FC<StockItemsPropsType> = (props) => {
-  const { categoryNames, productsItem } = props;
+  const { categoryNames, productsItem, onMoveItem } = props;
   const [active, setActive] = useState<string>('home');
   const [products, setProducts] = useState<ProductItem[]>(productsItem);
   const classes = stockItemStyles();
@@ -34,20 +35,24 @@ const StockItems: React.FC<StockItemsPropsType> = (props) => {
             active={active}
             handleTab={(name: string) => setActive(name)}
           />
-          <Divider className={classes.divider} />
-          <div className={classes.appBar}>
-            <Search
-              onSearch={(data) => setProducts(data as ProductItem[])}
-              Data={products}
-              allData={allData}
-              multiProp={true}
-            />
-          </div>
-          <Grid item xs={12}>
-            <ProductItems products={products} />
-          </Grid>
         </Grid>
-        <Grid item xs={6}></Grid>
+        <Grid item xs={12}>
+          <Divider className={classes.divider} />
+        </Grid>
+        <div className={classes.appBar}>
+          <Search
+            onSearch={(data) => setProducts(data as ProductItem[])}
+            Data={products}
+            allData={allData}
+            multiProp={true}
+          />
+        </div>
+        <Grid item xs={12}>
+          <ProductItems
+            onMoveItem={(item) => onMoveItem(item)}
+            products={products}
+          />
+        </Grid>
       </Grid>
     </Paper>
   );

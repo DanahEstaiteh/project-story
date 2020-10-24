@@ -17,16 +17,19 @@ export const stockItemStyles = makeStyles({
   info: {
     paddingTop: '20px'
   },
-  tab: {
+  categoryTab: {
     display: 'inline',
     padding: '2px'
   },
   appBar: {
-    backgroundColor: '#FFFFFF',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    position: 'static'
+    width: '100%',
+    position: 'static',
+    '& > div': {
+      width: '100%'
+    }
   },
   buttonTab: {
     backgroundColor: '#E2E2E2',
@@ -42,13 +45,20 @@ export const stockItemStyles = makeStyles({
     padding: '0px 10px'
   },
   divider: {
-    height: '10px',
+    height: '5px',
     borderRadius: '5px',
     backgroundColor: '#EEEFEE',
     border: 'solid 1px #767676',
     boxShadow: '1px 1px 1px 1px #767'
   },
   root: {
-    width: '1000px'
+    width: '100%',
+    backgroundColor: '#ECF0F1'
+  },
+  tabList: {
+    '& .MuiListItem-root': {
+      display: 'inline',
+      padding: '3px'
+    }
   }
 });

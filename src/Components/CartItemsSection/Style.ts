@@ -57,7 +57,7 @@ export const cartItemStyles = makeStyles({
     boxShadow: '1px 1px 1px 1px #767'
   },
   root: {
-    width: '60%',
+    width: '100%',
     backgroundColor: '#ECF0F1'
   },
   id: {

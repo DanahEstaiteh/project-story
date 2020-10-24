@@ -19,11 +19,11 @@ const StockTabs: React.FC<StockTabProps> = (props) => {
 
   return (
     <div className={classes.appBar}>
-      <List>
+      <List className={classes.tabList}>
         {categoryNames.map((name) => {
           if (categoryNames.indexOf(name) === 0) {
             return (
-              <ListItem className={classes.tab} key={name.title}>
+              <ListItem className={classes.categoryTab} key={name.title}>
                 <Button
                   onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -38,7 +38,7 @@ const StockTabs: React.FC<StockTabProps> = (props) => {
             );
           } else {
             return (
-              <ListItem key={name.title} className={classes.tab}>
+              <ListItem key={name.title} className={classes.categoryTab}>
                 <Button
                   onClick={(
                     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

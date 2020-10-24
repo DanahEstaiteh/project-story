@@ -161,6 +161,7 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
         />
         <PopUp
           title="Edit Product"
+          color="#34495E"
           openPopup={openProductEdit}
           setOpenPopup={setOpenopenProductEdit}
         >

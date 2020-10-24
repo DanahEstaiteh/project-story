@@ -28,7 +28,8 @@ export const cartFooterStyles = makeStyles({
     fontSize: 'medium'
   },
   total: {
-    color: '#2ECC71'
+    color: '#2ECC71',
+    padding: '10px'
   },
   data: {
     display: 'flex',
@@ -64,5 +65,11 @@ export const cartFooterStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  payamentPopUp: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '15px'
   }
 });

@@ -6,6 +6,7 @@ import { cartFooterStyles } from './FooterStyle';
 import { projectTheme } from '../../Styles/Style';
 import DeleteDialog from '../Dialog/DeleteDialog';
 import PopUp from '../PopUp/PopUp';
+import Paper from '@material-ui/core/Paper/Paper';
 
 interface CartSectionFooterPropsType {
   totalPrice: number;
@@ -130,14 +131,22 @@ const CartSectionFooter: React.FC<CartSectionFooterPropsType> = (props) => {
         </DeleteDialog>
         <PopUp
           title="Payment"
+          color="#2ECC71"
           openPopup={openPopUp}
           setOpenPopup={setOpenPopUp}
         >
-          <>
-            <Box className={classes.total}>
-              {total ? total : totalPrice} GTQ
+          <div className={classes.payamentPopUp}>
+            <Box>
+              <b>Total Price</b>
             </Box>
-          </>
+            <Box>{total ? total : totalPrice} GTQ</Box>
+          </div>
+          <div className={classes.payamentPopUp}>
+            <Box>
+              <b>Quantity</b>
+            </Box>
+            <Box>{itemsQuantity} items</Box>
+          </div>
         </PopUp>
       </footer>
     </>

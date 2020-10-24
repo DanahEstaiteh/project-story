@@ -2,7 +2,6 @@ import { Paper } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider/Divider';
 import Grid from '@material-ui/core/Grid/Grid';
 import React, { useEffect, useState } from 'react';
-import { itemData } from '../../Data/Data';
 import { Cart, Item } from '../../Types';
 import CartTab from './CartTab';
 import { cartItemStyles } from './Style';
@@ -10,35 +9,40 @@ import CartSection from './CartSection';
 
 interface CartItemsSectionPropsTypes {
   cartList: Cart[];
+  getActiveCart: (cartdId: number) => void;
+  itemData: Item[];
+  isAddItem: boolean;
 }
 
 const CartItemsSection: React.FC<CartItemsSectionPropsTypes> = (props) => {
-  const { cartList } = props;
+  const { cartList, getActiveCart, itemData, isAddItem } = props;
   const [data, setData] = useState<Cart[]>([]);
-  const [activeCartData, setActiveCartData] = useState<Item[]>([]);
+  //const [activeData, setActiveData] = useState<Item[]>(itemData);
+  const [activeCartData, setActiveCartData] = useState<Item[]>(itemData);
   const [active, setActive] = useState<number>(0);
   const classes = cartItemStyles();
 
   const handleCartDelete = (id: number) => {
     setData(cartList.filter((item) => item.id !== id));
-
-    console.log({ data });
   };
   const handleCancelCart = (id: number) => {
     setData(cartList.filter((item) => item.id !== id));
-
-    console.log({ data });
   };
+  useEffect(() => {
+    setActiveCartData(itemData.filter((item) => item.cartId == active));
+  }, [itemData]);
 
   useEffect(() => {
     setActiveCartData(itemData.filter((item) => item.cartId == active));
+    console.log({ itemData, activeCartData });
+    getActiveCart(active);
   }, [active]);
 
   useEffect(() => {
-    console.log('in effect');
     setActiveCartData([]);
   }, [data]);
 
+  console.log({ itemData, activeCartData });
   return (
     <Paper className={classes.root}>
       <Grid container item xs={12} spacing={2} className={classes.container}>
@@ -49,7 +53,9 @@ const CartItemsSection: React.FC<CartItemsSectionPropsTypes> = (props) => {
             handleTab={(data) => setActive(data)}
             onDelete={handleCartDelete}
           />
-          <Divider className={classes.divider} />
+          <Grid item xs={12}>
+            <Divider className={classes.divider} />
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <CartSection
