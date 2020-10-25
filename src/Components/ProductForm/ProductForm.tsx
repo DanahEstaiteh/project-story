@@ -1,5 +1,5 @@
 import { Button, Grid, ThemeProvider } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { categoryData, productData } from '../../Data/Data';
 import { Errors, product } from '../../Types';
 import { getCategoryName } from '../CategoriesList/CategoryFunctions';
@@ -8,18 +8,29 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { ProductFormStyles } from './Style';
 import { addNewProduct, updateProduct } from '../productData/ProductFunction';
 import { projectTheme } from '../../Styles/Style';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import ConfirmDialog from '../Dialog/ConfirmDialog';
 
 interface ProductFprmPropsType {
   initialValues: product;
   initialErrors: Errors;
   addOrEdit: (newData: product[]) => void;
+  onCloseForm: () => void;
+  onLoading: (isLoading: true) => void;
 }
 
 const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
-  const { initialValues, initialErrors, addOrEdit } = props;
+  const {
+    initialValues,
+    initialErrors,
+    addOrEdit,
+    onCloseForm,
+    onLoading
+  } = props;
   const [data, setData] = useState<product[]>(productData);
   const [values, setValues] = useState<product>(initialValues);
   const [errors, setErrors] = useState<Errors>(initialErrors);
+  const [open, setOpen] = useState<boolean>(false);
   const classes = ProductFormStyles();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +87,10 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
     console.log({ temp });
     if (fieldValues == values) return Object.values(temp).every((x) => x == '');
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    onLoading(true);
+    e.preventDefault();
     if (validate()) {
       console.log('before if normal ');
       if (initialValues.id !== 0) {
@@ -93,7 +105,6 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
 
       addOrEdit(data);
     }
-    console.log({ data });
   };
 
   return (
@@ -214,11 +225,19 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
                 variant="contained"
                 size="medium"
                 type="button"
+                onClick={() => setOpen(true)}
               />
             </div>
           </Grid>
         </Grid>
       </form>
+      <ConfirmDialog
+        isOpen={open}
+        onConfirm={onCloseForm}
+        onClose={() => setOpen(false)}
+      >
+        Are you sure you want to close form?
+      </ConfirmDialog>
     </ThemeProvider>
   );
 };

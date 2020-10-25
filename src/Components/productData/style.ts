@@ -80,5 +80,10 @@ export const productStyles = makeStyles((theme: typeof projectTheme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: '60px'
+  },
+  circularProgress: {
+    position: 'absolute',
+    top: '40%',
+    left: '50%'
   }
 }));

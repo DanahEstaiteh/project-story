@@ -275,9 +275,18 @@ export const productData: product[] = [
     color: '#ef9a9a'
   }
 ];
-export const categoryTitle: CategoryTitle[] = [
-  { id: 0, title: 'CategoryName' },
-  { id: 1, title: 'Created At' }
+export const categoryTitle: { id: keyof Category; title: string }[] = [
+  { id: 'categoryName', title: 'CategoryName' },
+  { id: 'createdAt', title: 'Created At' }
+];
+
+export const productTitle: { id: keyof product; label: string }[] = [
+  { id: 'code', label: 'Code' },
+  { id: 'name', label: 'Name' },
+  { id: 'category', label: 'Category' },
+  { id: 'productDescription', label: 'Product Description' },
+  { id: 'tax', label: 'Tax(%)' },
+  { id: 'price', label: 'Price' }
 ];
 
 export const cartData: Cart[] = [{ id: 2, time: new Date() }];

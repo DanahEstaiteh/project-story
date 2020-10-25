@@ -2,7 +2,7 @@ import { Paper, ListItem } from '@material-ui/core';
 
 import React, { useEffect, useState } from 'react';
 import { Item } from '../../Types/index';
-import DeleteDialog from '../Dialog/DeleteDialog';
+import ConfirmDialog from '../Dialog/ConfirmDialog';
 import Quantity from './Quantity';
 import { cartItemStyles } from './Style';
 import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
@@ -54,9 +54,9 @@ const CartItem: React.FC<CartItemPropsType> = (props) => {
       </ListItem>
 
       <ListItem>{totalPrice} GTQ</ListItem>
-      <DeleteDialog isOpen={open} onClose={handleClose} onConfirm={onDelete}>
+      <ConfirmDialog isOpen={open} onClose={handleClose} onConfirm={onDelete}>
         Are you sure you want to delete this item ?
-      </DeleteDialog>
+      </ConfirmDialog>
     </Paper>
   );
 };

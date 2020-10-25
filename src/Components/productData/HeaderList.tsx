@@ -12,15 +12,6 @@ interface HeaderListProps {
   productData: product[];
 }
 
-enum sortType {
-  code = 'Code',
-  category = 'Category',
-  price = 'Price',
-  tax = 'Tax',
-  name = 'Name',
-  productDescription = 'ProductDescription'
-}
-
 const HeaderList: React.FC<HeaderListProps> = (props) => {
   const classes = productStyles();
   const { productTitle, productData, onSort } = props;

@@ -1,13 +1,13 @@
 import { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 import { productData } from '../../Data/Data';
-import ProductDataList from './productDataList';
+import Product from './Product';
 
 export default {
   title: 'product',
-  Component: ProductDataList
+  Component: Product
 };
 
-const Template: Story = () => <ProductDataList productData={productData} />;
+const Template: Story = () => <Product productData={productData} />;
 
 export const ProductList = Template.bind({});

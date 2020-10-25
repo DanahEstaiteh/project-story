@@ -6,7 +6,7 @@ import { Cart } from '../../Types';
 import { cartItemStyles } from './Style';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import DeleteDialog from '../Dialog/DeleteDialog';
+import ConfirmDialog from '../Dialog/ConfirmDialog';
 
 interface CartTAbPropsType {
   cartList: Cart[];
@@ -83,13 +83,13 @@ const CartTab: React.FC<CartTAbPropsType> = (props) => {
             <RemoveIcon />
           </Button>
         </ListItem>
-        <DeleteDialog
+        <ConfirmDialog
           isOpen={open}
           onClose={handleClose}
           onConfirm={() => onDelete(active)}
         >
           Are you sure you want to delete this cart?
-        </DeleteDialog>
+        </ConfirmDialog>
       </List>
     </div>
   );

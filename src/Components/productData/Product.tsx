@@ -1,5 +1,4 @@
-import classes from '*.module.css';
-import { ThemeProvider } from '@material-ui/core';
+import { CircularProgress, ThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import React, { useEffect, useState } from 'react';
 import { projectTheme } from '../../Styles/Style';
@@ -12,6 +11,7 @@ import Search from '../Search/Search';
 import HeaderList from './HeaderList';
 import ProductDataList from './productDataList';
 import { productStyles } from './style';
+import { productTitle } from '../../Data/Data';
 
 interface ProductProps {
   productData: product[];
@@ -20,14 +20,19 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = (props) => {
   const { productData } = props;
   const [data, setData] = useState<product[]>(productData);
+  const [loading, setLoading] = useState<boolean>(false);
   const [openProductEdit, setOpenopenProductEdit] = useState<boolean>(false);
   const classes = productStyles();
   const addOrEdit = (newData: product[]) => {
     setOpenopenProductEdit(false);
+    setLoading(true);
     setData(newData);
   };
   const handleOpenPopup = () => {
     setOpenopenProductEdit(true);
+  };
+  const handleClosePopup = () => {
+    setOpenopenProductEdit(false);
   };
   const initialValues = {
     id: 0,
@@ -52,17 +57,16 @@ const Product: React.FC<ProductProps> = (props) => {
     price: '',
     count: ''
   };
-  const productTitle: { id: keyof product; label: string }[] = [
-    { id: 'code', label: 'Code' },
-    { id: 'name', label: 'Name' },
-    { id: 'category', label: 'Category' },
-    { id: 'productDescription', label: 'Product Description' },
-    { id: 'tax', label: 'Tax(%)' },
-    { id: 'price', label: 'Price' }
-  ];
+
   useEffect(() => {
     setData(data);
   }, [data]);
+  useEffect(() => {
+    console.log({ loading });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
 
   return (
     <>
@@ -85,7 +89,6 @@ const Product: React.FC<ProductProps> = (props) => {
                 Data={data}
                 onSearch={(data) => setData(data as product[])}
                 allData={productData}
-                multiProp={true}
               />
             </div>
           </Grid>
@@ -96,19 +99,24 @@ const Product: React.FC<ProductProps> = (props) => {
           productData={data}
           onSort={(data) => setData(data)}
         />
+
         <ProductDataList productData={data} />
         <PopUp
           title="Add Product"
           color="#34495E"
           openPopup={openProductEdit}
+          onClose={handleClosePopup}
           setOpenPopup={setOpenopenProductEdit}
         >
           <ProductForm
             initialValues={initialValues}
             initialErrors={initialErrors}
             addOrEdit={(data) => addOrEdit(data)}
+            onCloseForm={handleClosePopup}
+            onLoading={(isLoading) => setLoading(isLoading)}
           />
         </PopUp>
+        {loading && <CircularProgress />}
       </ThemeProvider>
     </>
   );

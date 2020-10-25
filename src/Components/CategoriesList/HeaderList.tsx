@@ -6,7 +6,7 @@ import { Category, CategoryTitle } from '../../Types';
 import { categoryStyles } from './Styles';
 
 interface HeaderListProps {
-  categoryTitle: CategoryTitle[];
+  categoryTitle: { id: keyof Category; title: string }[];
   onSort: (data: Category[]) => void;
   categoryData: Category[];
 }
@@ -17,43 +17,39 @@ const HeaderList: React.FC<HeaderListProps> = (props) => {
   const [sort, setSort] = useState<boolean>(false);
   const [data] = useState<Category[]>(categoryData);
 
-  const handleSort = (title: string) => {
+  const handleSort = (title: keyof Category) => {
     setSort(!sort);
-    if (title === 'createdAt') {
-      CategoryDateSort();
-    } else {
-      CategoryNameSort();
-    }
+    categorySort(title);
   };
 
-  const CategoryNameSort = () => {
-    categoryData.sort((a, b) =>
-      a['categoryName'] > b['categoryName'] ? 1 : -1
-    );
+  const categorySort = (title: keyof Category) => {
+    categoryData.sort((a, b) => (a[title] > b[title] ? 1 : -1));
     let sortedData = [...categoryData];
     onSort(sortedData);
   };
-  const CategoryDateSort = () => {
-    categoryData.sort((a, b) => (a['createdAt'] > b['createdAt'] ? 1 : -1));
-    let sortedData = [...categoryData];
-    onSort(sortedData);
-  };
+
   useEffect(() => {}, [sort, data]);
 
   return (
     <Grid container spacing={0} className={classes.headerList}>
-      {categoryTitle.map((category) => (
+      {categoryTitle.map((category, index) => (
         <Grid item xs={4}>
           <Box key={category.id} className={classes.headerItem}>
             {category.title}
             <SwapVertIcon
               onClick={() => {
-                handleSort(category.title);
+                handleSort(category.id);
               }}
             />
           </Box>
         </Grid>
       ))}
+      <Grid item xs={4}>
+        <Box key="action" className={classes.headerItem}>
+          Actions
+          <SwapVertIcon />
+        </Box>
+      </Grid>
     </Grid>
   );
 };

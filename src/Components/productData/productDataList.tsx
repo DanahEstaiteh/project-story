@@ -12,6 +12,8 @@ import PopUp from '../PopUp/PopUp';
 import ProductForm from '../ProductForm/ProductForm';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { projectTheme } from '../../Styles/Style';
+import ConfirmDailog from '../Dialog/ConfirmDialog';
+
 interface ProductDataProps {
   productData: product[];
 }
@@ -53,6 +55,7 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pages[page]);
   const [openProductEdit, setOpenopenProductEdit] = useState<boolean>(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
   const [productForEdit, setProductForEdit] = useState<product>(
     initialEditProduct
   );
@@ -60,6 +63,13 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
   const addOrEdit = (newData: product[]) => {
     setOpenopenProductEdit(false);
     setData(newData);
+  };
+  const handleOpenConfirmDialog = (code: string) => {
+    setOpenConfirmDialog(true);
+    setProductCode(code);
+  };
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
   };
   const handleCloseProductDetails = () => {
     setOpenopenProductDetails(false);
@@ -72,8 +82,12 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
     setProductForEdit(product);
     setOpenopenProductEdit(true);
   };
-  const handleCloseEditProduct = (product: product) => {
+  const handleCloseEditProduct = () => {
     setOpenopenProductEdit(false);
+  };
+  const handleDeleteproduct = () => {
+    let newData = data.filter((product) => product.code !== productCode);
+    setData(newData);
   };
 
   const handleChangePage = (
@@ -94,14 +108,19 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
   };
 
   useEffect(() => {
+    console.log({ loading });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
+
+  useEffect(() => {
     setData(productData);
-    if (!loading) {
-      console.log('hiiiiii');
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
   }, [productData]);
+
+  useEffect(() => {
+    console.log({ data });
+  }, [data]);
 
   return (
     <>
@@ -129,7 +148,10 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
               </Grid>
               <Grid item xs={2} className={classes.listItem}>
                 <Box key={product.code}>
-                  <ClearIcon className={classes.actionIcon} />
+                  <ClearIcon
+                    className={classes.actionIcon}
+                    onClick={() => handleOpenConfirmDialog(product.code)}
+                  />
                   <DescriptionIcon
                     className={classes.actionIcon}
                     onClick={() => handleOpenProductDetails(product.code)}
@@ -142,6 +164,13 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
               </Grid>
             </Grid>
           ))}
+          <ConfirmDailog
+            isOpen={openConfirmDialog}
+            onClose={handleCloseConfirmDialog}
+            onConfirm={handleDeleteproduct}
+          >
+            Are you sure you want to delete this product?
+          </ConfirmDailog>
           <ProductDetails
             isOpen={openProductDetails}
             onClose={handleCloseProductDetails}
@@ -164,14 +193,17 @@ const ProductDataList: React.FC<ProductDataProps> = (props) => {
           color="#34495E"
           openPopup={openProductEdit}
           setOpenPopup={setOpenopenProductEdit}
+          onClose={() => handleCloseEditProduct}
         >
           <ProductForm
             initialValues={productForEdit}
             initialErrors={initialErrors}
             addOrEdit={(data) => addOrEdit(data)}
+            onCloseForm={() => setOpenopenProductEdit(false)}
+            onLoading={(isLoading) => setLoading(isLoading)}
           />
         </PopUp>
-        {loading && <CircularProgress />}
+        {loading && <CircularProgress className={classes.circularProgress} />}
       </ThemeProvider>
     </>
   );

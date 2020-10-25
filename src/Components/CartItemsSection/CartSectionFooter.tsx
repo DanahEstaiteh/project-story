@@ -4,7 +4,7 @@ import Divider from '@material-ui/core/Divider/Divider';
 import React, { useEffect, useState } from 'react';
 import { cartFooterStyles } from './FooterStyle';
 import { projectTheme } from '../../Styles/Style';
-import DeleteDialog from '../Dialog/DeleteDialog';
+import ConfirmDialog from '../Dialog/ConfirmDialog';
 import PopUp from '../PopUp/PopUp';
 import Paper from '@material-ui/core/Paper/Paper';
 
@@ -126,14 +126,15 @@ const CartSectionFooter: React.FC<CartSectionFooterPropsType> = (props) => {
         >
           PAYAMENT
         </Button>
-        <DeleteDialog isOpen={open} onClose={handleClose} onConfirm={onDelete}>
+        <ConfirmDialog isOpen={open} onClose={handleClose} onConfirm={onDelete}>
           Are you sure you want to delete this cart?
-        </DeleteDialog>
+        </ConfirmDialog>
         <PopUp
           title="Payment"
           color="#2ECC71"
           openPopup={openPopUp}
           setOpenPopup={setOpenPopUp}
+          onClose={handleClosePopUp}
         >
           <div className={classes.payamentPopUp}>
             <Box>

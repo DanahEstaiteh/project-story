@@ -9,11 +9,10 @@ interface SearchPropsType {
   onSearch: (newCat: DataType[]) => void;
   Data: DataType[];
   allData: DataType[];
-  multiProp: boolean;
 }
 
 const Search: React.FC<SearchPropsType> = (props) => {
-  const { onSearch, Data, allData, multiProp } = props;
+  const { onSearch, Data, allData } = props;
   const [searchKey, setSearchKey] = useState<string>('');
 
   const handleSearch = () => {

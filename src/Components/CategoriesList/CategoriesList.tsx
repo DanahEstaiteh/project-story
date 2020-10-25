@@ -12,7 +12,7 @@ import Search from '../Search/Search';
 import TablePaginationDemo from '../Pagination/TablePaginationDemo';
 import AddNew from '../AddNew/AddNew';
 import HeaderList from './HeaderList';
-import DeleteDialog from '../Dialog/DeleteDialog';
+import ConfirmDailog from '../Dialog/ConfirmDialog';
 import { categoryTitle } from '../../Data/Data';
 
 interface CategoryListProps {
@@ -61,9 +61,10 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
     setItemName(Name);
     setOpenEditDialog(true);
   };
-  const handleDelete = (id: string) => {
-    setItemId(id);
-    handleOpen();
+
+  const handleDeleteCategory = (id: string) => {
+    let newData = data.filter((category) => category.id !== id);
+    setData(newData);
   };
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
               <Box key={Category.id}>
                 <ClearIcon
                   className={classes.actionIcon}
-                  onClick={() => handleDelete(Category.id)}
+                  onClick={handleOpen}
                 />
                 <EditIcon
                   className={classes.actionIcon}
@@ -95,13 +96,16 @@ const CategoryData: React.FC<CategoryListProps> = (props) => {
                 />
               </Box>
             </Grid>
+            <ConfirmDailog
+              isOpen={open}
+              onClose={handleClose}
+              onConfirm={() => handleDeleteCategory(Category.id)}
+            >
+              Are you sure you want to delete this category?
+            </ConfirmDailog>
           </Grid>
         ))}
-        <DeleteDialog
-          isOpen={open}
-          onClose={handleClose}
-          onConfirm={() => {}}
-        />
+
         <EditDialog
           Data={data}
           CategoryName={itemName}
@@ -136,12 +140,11 @@ const CategoriesList: React.FC<CategoryListProps> = (props) => {
     <>
       <header className={classes.header}>
         <AddNew onSubmit={(data) => setData(data)} Data={data} />
-        {/* <Search
+        <Search
           Data={data}
-          onSearch={(data) => setData(data)}
+          onSearch={(data) => setData(data as Category[])}
           allData={categoryData}
-          multiProp={false}
-        /> */}
+        />
       </header>
       <HeaderList
         categoryTitle={categoryTitle}

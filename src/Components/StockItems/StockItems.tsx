@@ -44,7 +44,6 @@ const StockItems: React.FC<StockItemsPropsType> = (props) => {
             onSearch={(data) => setProducts(data as ProductItem[])}
             Data={products}
             allData={allData}
-            multiProp={true}
           />
         </div>
         <Grid item xs={12}>

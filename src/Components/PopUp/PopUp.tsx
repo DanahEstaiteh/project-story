@@ -15,14 +15,16 @@ interface PopupPropsType {
   openPopup: boolean;
   setOpenPopup: (isOpen: boolean) => void;
   color: string;
+  onClose: () => void;
 }
 
 const PopUp: React.FC<PopupPropsType> = (props) => {
-  const { color, title, openPopup, setOpenPopup, children } = props;
+  const { color, title, openPopup, setOpenPopup, onClose, children } = props;
   const classes = popupStyles();
   return (
     <Dialog
       open={openPopup}
+      onClose={onClose}
       maxWidth="md"
       classes={{ paper: classes.dialogWrapper }}
     >
