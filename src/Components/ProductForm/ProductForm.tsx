@@ -2,14 +2,24 @@ import { Button, Grid, ThemeProvider } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { categoryData, productData } from '../../Data/Data';
 import { Errors, product } from '../../Types';
-import { getCategoryName } from '../CategoriesList/CategoryFunctions';
+import {
+  getCategoryName,
+  getCategoryNames
+} from '../CategoriesList/CategoryFunctions';
 import Controls from '../Controls/index';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { ProductFormStyles } from './Style';
 import { addNewProduct, updateProduct } from '../productData/ProductFunction';
 import { projectTheme } from '../../Styles/Style';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import ConfirmDialog from '../Dialog/ConfirmDialog';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+  DatePicker
+} from '@material-ui/pickers';
 
 interface ProductFprmPropsType {
   initialValues: product;
@@ -28,98 +38,69 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
     onLoading
   } = props;
   const [data, setData] = useState<product[]>(productData);
-  const [values, setValues] = useState<product>(initialValues);
-  const [errors, setErrors] = useState<Errors>(initialErrors);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [open, setOpen] = useState<boolean>(false);
   const classes = ProductFormStyles();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    });
-    console.log('input' + { values });
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const name = e.target.name as string;
-    const value = e.target.value as string;
-    setValues({
-      ...values,
-      [name]: value
-    });
-    console.log({ values });
-  };
-
+  const validationSchema = yup.object({
+    name: yup.string().required('Product Name is Required !'),
+    rawPrice: yup
+      .number()
+      .moreThan(0, 'Raw Price must be larger than 0')
+      .required('Raw Price is Required !'),
+    price: yup
+      .number()
+      .moreThan(yup.ref('rawPrice'), 'Price must be larger than Raw Price !')
+      .required('Price is Required !'),
+    code: yup.string().required('Product code is Required!')
+  });
   const handleDateChange = (date: Date) => {
-    setValues({
-      ...values,
-      ['expirationDate']: date
-    });
-    console.log({ values });
+    setSelectedDate(date);
   };
 
-  const validate = (fieldValues = values) => {
-    let temp = { ...errors };
-    if ('name' in fieldValues)
-      temp.name = fieldValues.name ? '' : 'Product Name is Required !';
+  const productForm = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values: product) => {
+      onLoading(true);
 
-    if ('rawPrice' in fieldValues)
-      temp.rawPrice = fieldValues.rawPrice ? '' : 'Raw Price is Required !';
-    if ('price' in fieldValues)
-      temp.price = fieldValues.price ? ' ' : 'Price is Required !';
-    if ('price' in fieldValues)
-      temp.price = fieldValues.price > 0 ? '' : 'Price must be larger than 0 !';
-    if ('price' in fieldValues)
-      temp.price =
-        fieldValues.price > fieldValues.rawPrice
-          ? ''
-          : 'Price must be larger than Raw Price !';
-    if ('code' in fieldValues)
-      temp.code = fieldValues.code.match(/^[0-9a-zA-Z]+$/)
-        ? ''
-        : 'Product code must contain letter and number only';
-    if ('code' in fieldValues)
-      temp.code = fieldValues.code ? '' : 'Product code is Required!';
-    setErrors({
-      ...temp
-    });
-    console.log({ temp });
-    if (fieldValues == values) return Object.values(temp).every((x) => x == '');
-  };
+      console.log({ values });
+      if (values.id !== 0) {
+        values.expirationDate = selectedDate;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    onLoading(true);
-    e.preventDefault();
-    if (validate()) {
-      console.log('before if normal ');
-      if (initialValues.id !== 0) {
         let editData = updateProduct(values);
         setData(editData);
-        console.log({ editData });
       } else {
+        values.expirationDate = selectedDate;
+
         let newData = addNewProduct(values);
         setData(newData);
-        console.log({ newData });
       }
 
       addOrEdit(data);
-    }
-  };
+    },
+    validationSchema: validationSchema
+  });
+  useEffect(() => {
+    console.log({ productForm });
+  }, []);
 
   return (
     <ThemeProvider theme={projectTheme}>
-      <form onSubmit={handleSubmit} className={classes.root} autoComplete="off">
+      <form
+        onSubmit={productForm.handleSubmit}
+        className={classes.root}
+        autoComplete="off"
+      >
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Controls.Input
               id="Name"
               name="name"
               label="Name"
-              value={values.name}
-              error={errors.name}
+              value={productForm.values.name}
+              error={productForm.errors.name}
               type="text"
-              onChange={(e) => handleInputChange(e)}
+              onChange={productForm.handleChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -128,9 +109,9 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
               name="rawPrice"
               label="Raw Price"
               type="text"
-              value={values.rawPrice}
-              error={errors.rawPrice}
-              onChange={(e) => handleInputChange(e)}
+              value={productForm.values.rawPrice}
+              error={productForm.errors.rawPrice}
+              onChange={productForm.handleChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -139,9 +120,9 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
               name="price"
               label="Price"
               type="text"
-              value={values.price}
-              error={errors.price}
-              onChange={(e) => handleInputChange(e)}
+              value={productForm.values.price}
+              error={productForm.errors.price}
+              onChange={productForm.handleChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -150,9 +131,9 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
               name="code"
               label="Code"
               type="text"
-              value={values.code}
-              error={errors.code}
-              onChange={(e) => handleInputChange(e)}
+              value={productForm.values.code}
+              error={productForm.errors.code}
+              onChange={productForm.handleChange}
             />
           </Grid>
 
@@ -162,9 +143,9 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
               name="count"
               label="Stock Count"
               type="text"
-              value={values.count}
-              error={errors.count}
-              onChange={(e) => handleInputChange(e)}
+              value={productForm.values.count}
+              error={productForm.errors.count}
+              onChange={productForm.handleChange}
             />
           </Grid>
           <Grid item xs={12}></Grid>
@@ -189,18 +170,21 @@ const ProductForm: React.FC<ProductFprmPropsType> = (props) => {
             <Controls.Select
               name="category"
               label="Category"
-              value={values.category}
-              error={errors.category}
-              onChange={(e) => handleSelectChange(e)}
-              options={getCategoryName(categoryData)}
+              value={productForm.values.category}
+              error={productForm.errors.category}
+              onChange={productForm.handleChange}
+              options={getCategoryNames(categoryData)}
             />
           </Grid>
           <Grid item xs={12}>
             <TextareaAutosize
+              name="productDescription"
               className={classes.textArea}
               aria-label="minimum height"
               rowsMin={5}
               placeholder="Product Description"
+              value={productForm.values.productDescription}
+              onChange={productForm.handleChange}
             />
           </Grid>
           <Grid item xs={12}>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { categoryData, itemData, cartData } from '../../Data/Data';
 import { ProductItem, Item } from '../../Types';
 import CartItemsSection from '../CartItemsSection/CartItemsSection';
-import { getCategoryName } from '../CategoriesList/CategoryFunctions';
+import { getCategoryNamePosPage } from '../CategoriesList/CategoryFunctions';
 import { getProductItem } from '../productData/ProductFunction';
 import StockItems from '../StockItems/StockItems';
 
@@ -12,7 +12,7 @@ const PosPage = () => {
   const [activeCart, setActiveCart] = useState<number>(0);
   const [activeCartData, setActiveCartData] = useState<Item[]>([]);
   const [data, setData] = useState<Item[]>(itemData);
-  const categoryNames = getCategoryName(categoryData);
+  const categoryNames = getCategoryNamePosPage(categoryData);
   const addItemToCart = (item: ProductItem) => {
     const itemIndex = itemData.findIndex(
       (currentItem) =>

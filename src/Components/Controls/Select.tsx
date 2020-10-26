@@ -9,7 +9,7 @@ interface SelectPropsType {
   name: string;
   label: string;
   value: string;
-  error: string;
+  error: string | undefined;
   onChange: (e: any) => void;
   options: CategoryTitle[];
 }
@@ -21,12 +21,18 @@ const Select: React.FC<SelectPropsType> = (props) => {
     <FormControl variant="outlined" {...(error && { error: true })}>
       <InputLabel>{label}</InputLabel>
       <MuiSelect label={label} name={name} value={value} onChange={onChange}>
-        <MenuItem value=""> None</MenuItem>
-        {options.map((item) => (
-          <MenuItem key={item.id} value={item.id}>
-            {item.title}
-          </MenuItem>
-        ))}
+        <MenuItem value={value}> {value}</MenuItem>
+        {options.map((item) => {
+          if (item.title !== value) {
+            return (
+              <MenuItem key={item.id} value={item.title}>
+                {item.title}
+              </MenuItem>
+            );
+          } else {
+            return null;
+          }
+        })}
       </MuiSelect>
       {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
